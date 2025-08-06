@@ -11,7 +11,7 @@ interface PresaleSectionProps {
 
 const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
   const [formData, setFormData] = useState({ name: "", email: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

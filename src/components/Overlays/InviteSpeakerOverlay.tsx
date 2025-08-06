@@ -21,7 +21,7 @@ const InviteSpeakOverlay: React.FC<InviteSpeakOverlayProps> = ({
     inviteOrganization: "",
     inviteDetails: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

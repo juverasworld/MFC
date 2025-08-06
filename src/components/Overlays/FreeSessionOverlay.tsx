@@ -218,7 +218,7 @@ const FreeSessionOverlay: React.FC<FreeSessionOverlayProps> = ({
     sessionEmail: "",
     sessionCountry: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

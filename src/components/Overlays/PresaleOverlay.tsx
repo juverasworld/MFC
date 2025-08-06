@@ -15,7 +15,7 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
   const [presaleType, setPresaleType] = useState<"local" | "international" | "">("");
   const [copies, setCopies] = useState<number>(0);
   const [totalNGN, setTotalNGN] = useState<number>(0);
-  const [formData, setFormData] = useState({
+  const [, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
@@ -23,7 +23,7 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
   });
 
   const pricePerCopyNGN = 20000; // ₦20,000 per copy
-  const amazonLink = import.meta.env.VITE_AMAZON_LINK || "https://www.amazon.com/your-book-link";
+//   const amazonLink = import.meta.env.VITE_AMAZON_LINK || "https://www.amazon.com/your-book-link";
 
   useEffect(() => {
     console.log(`PresaleOverlay isOpen: ${isOpen}, step: ${step}, presaleType: ${presaleType}`);

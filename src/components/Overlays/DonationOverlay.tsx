@@ -36,7 +36,7 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({
     organization: "",
     location: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
 //   const { initiatePaystackPayment } = usePaystack(config);
 
   const updateDonationSummary = (copies: number) => {

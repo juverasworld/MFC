@@ -3,7 +3,7 @@
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
+
 import "./MorePopup.scss";
 
 interface MorePopupProps {

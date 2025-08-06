@@ -9,7 +9,7 @@ import AboutAuthor from "./components/AboutAuthor";
 import TestimonialSection from "./components/TestimonialSection";
 import PodcastSection from "./components/PodcastSection";
 import PresaleSection from "./components/PresaleSection";
-import NewsletterSection from "./components/NewsletterSection";
+// import NewsletterSection from "./components/NewsletterSection";
 import MorePopup from "./components/Overlays/MorePopup";
 import FreeSessionOverlay from "./components/Overlays/FreeSessionOverlay";
 // import InviteSpeakOverlay from "./components/Overlays/InviteSpeakOverlay";
@@ -123,7 +123,7 @@ function App() {
                   <TestimonialSection />
                   <PodcastSection />
                   <PresaleSection openOverlay={openOverlay} />
-                  <NewsletterSection />
+                  {/* <NewsletterSection /> */}
                 </>
               }
             />

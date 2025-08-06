@@ -32,7 +32,7 @@ const SessionOverlay: React.FC<SessionOverlayProps> = ({
     amountNGN: config.sessionPriceNGN,
     amountUSD: config.sessionPriceUSD,
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
 //   const { initiatePaystackPayment } = usePaystack(config);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -73,7 +73,8 @@ const TestimonialSection: React.FC = () => {
       ease: "none",
       repeat: -1,
       modifiers: {
-        x: gsap.utils.unitize((x: number) => parseFloat(x) % totalWidth),
+        // x: gsap.utils.unitize((x: number) => parseFloat(x) % totalWidth),
+        x: gsap.utils.unitize((x: string) => parseFloat(x) % totalWidth),
       },
     });
 
