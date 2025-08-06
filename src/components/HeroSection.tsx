@@ -79,7 +79,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.42, 0, 0.58, 1] }, // cubic-bezier for easeInOut
+      transition: { duration: 0.8, delay: 0.2 }, // cubic-bezier for easeInOut
     },
   };
 
@@ -182,8 +182,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         <div className="cta-section">
-          <motion.a
-            href="#"
+          <motion.button
+            // href="#"
             className="more-info-btn"
             variants={buttonVariants}
             initial="hidden"
@@ -192,9 +192,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={() => openOverlay("donation")}
           >
             Donate Copy
-          </motion.a>
-          <motion.a
-            href="#"
+          </motion.button>
+          <motion.button
+            // href="#"
             className="more-info-btn"
             variants={buttonVariants}
             initial="hidden"
@@ -203,7 +203,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={() => openOverlay("presale")}
           >
             Presale Order
-          </motion.a>
+          </motion.button>
           {/* <a
             href="#"
             className="more-info-btn"

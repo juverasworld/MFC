@@ -1,0 +1,96 @@
+// src/assets/styles/components/InviteSpeakOverlay.scss
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .overlay-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        max-height: 80vh;
+        overflow-y: auto;
+
+        .overlay-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+
+            .back-btn {
+                background: none;
+                border: none;
+                font-size: 1.2rem;
+                cursor: pointer;
+                color: #333;
+            }
+
+            .close-btn {
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: #333;
+            }
+        }
+
+        .overlay-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .newsletter-form {
+            .form-group {
+                margin-bottom: 1rem;
+
+                .form-label {
+                    display: block;
+                    font-size: 1rem;
+                    color: #333;
+                    margin-bottom: 0.5rem;
+                }
+
+                .form-input {
+                    width: 100%;
+                    padding: 0.75rem;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                }
+
+                textarea.form-input {
+                    resize: vertical;
+                }
+            }
+
+            .confirm-btn {
+                background: #007bff;
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                width: 100%;
+                font-size: 1rem;
+
+                &:hover {
+                    background: #0056b3;
+                }
+
+                &:disabled {
+                    background: #ccc;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
