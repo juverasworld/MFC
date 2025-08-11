@@ -1,4 +1,99 @@
-// src/assets/styles/components/InviteSpeakOverlay.scss
+// // src/assets/styles/components/InviteSpeakOverlay.scss
+// .overlay {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     background: rgba(0, 0, 0, 0.5);
+//     z-index: 1000;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+
+//     .overlay-content {
+//         background: white;
+//         padding: 2rem;
+//         border-radius: 10px;
+//         max-width: 500px;
+//         width: 90%;
+//         position: relative;
+//         max-height: 80vh;
+//         overflow-y: auto;
+
+//         .overlay-header {
+//             display: flex;
+//             justify-content: space-between;
+//             align-items: center;
+//             margin-bottom: 1rem;
+
+//             .back-btn {
+//                 background: none;
+//                 border: none;
+//                 font-size: 1.2rem;
+//                 cursor: pointer;
+//                 color: #333;
+//             }
+
+//             .close-btn {
+//                 font-size: 1.5rem;
+//                 cursor: pointer;
+//                 color: #333;
+//             }
+//         }
+
+//         .overlay-title {
+//             font-size: 1.8rem;
+//             margin-bottom: 1rem;
+//             color: #333;
+//         }
+
+//         .newsletter-form {
+//             .form-group {
+//                 margin-bottom: 1rem;
+
+//                 .form-label {
+//                     display: block;
+//                     font-size: 1rem;
+//                     color: #333;
+//                     margin-bottom: 0.5rem;
+//                 }
+
+//                 .form-input {
+//                     width: 100%;
+//                     padding: 0.75rem;
+//                     border: 1px solid #ccc;
+//                     border-radius: 5px;
+//                     font-size: 1rem;
+//                 }
+
+//                 textarea.form-input {
+//                     resize: vertical;
+//                 }
+//             }
+
+//             .confirm-btn {
+//                 background: #1f2d3d;
+//                 color: white;
+//                 padding: 0.75rem 1.5rem;
+//                 border: none;
+//                 border-radius: 5px;
+//                 cursor: pointer;
+//                 width: 100%;
+//                 font-size: 1rem;
+
+//                 &:hover {
+//                     background: #0056b3;
+//                 }
+
+//                 &:disabled {
+//                     background: #ccc;
+//                     cursor: not-allowed;
+//                 }
+//             }
+//         }
+//     }
+// }
 .overlay {
     position: fixed;
     top: 0;
@@ -20,6 +115,7 @@
         position: relative;
         max-height: 80vh;
         overflow-y: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
         .overlay-header {
             display: flex;
@@ -33,12 +129,22 @@
                 font-size: 1.2rem;
                 cursor: pointer;
                 color: #333;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #0056b3;
+                }
             }
 
             .close-btn {
                 font-size: 1.5rem;
                 cursor: pointer;
                 color: #333;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #ff4d4f;
+                }
             }
         }
 
@@ -46,9 +152,14 @@
             font-size: 1.8rem;
             margin-bottom: 1rem;
             color: #333;
+            text-align: center;
         }
 
         .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
             .form-group {
                 margin-bottom: 1rem;
 
@@ -65,10 +176,18 @@
                     border: 1px solid #ccc;
                     border-radius: 5px;
                     font-size: 1rem;
+                    transition: border-color 0.3s;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #0056b3;
+                        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+                    }
                 }
 
                 textarea.form-input {
                     resize: vertical;
+                    min-height: 100px;
                 }
             }
 
@@ -80,7 +199,10 @@
                 border-radius: 5px;
                 cursor: pointer;
                 width: 100%;
+                max-width: 200px;
+                margin: 1rem auto;
                 font-size: 1rem;
+                transition: background 0.3s;
 
                 &:hover {
                     background: #0056b3;
@@ -91,6 +213,25 @@
                     cursor: not-allowed;
                 }
             }
+        }
+
+        .confirmation-message {
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #333;
+            line-height: 1.5;
+
+            &.error {
+                color: #ff4d4f;
+            }
+        }
+
+        .error-message {
+            color: #ff4d4f;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: center;
         }
     }
 }

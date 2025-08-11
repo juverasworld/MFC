@@ -63,10 +63,32 @@ export interface Config {
     location?: string;
   }
   
-  export interface Presale {
-    type: string;
-    copies: number;
-    totalNGN: number;
+  // export interface Presale {
+  //   type: string;
+  //   copies: number;
+  //   totalNGN: number;
+  // }
+  export interface PaystackTransaction {
+    reference: string;
+    status?: string; // Optional: include if Paystack returns status
+
+    // Add other properties as needed (e.g., status, amount)
+  }
+  
+  export interface LocalPayload {
+    firstname: string;
+    email: string;
+    phone: string;
+    city: string;
+    no_of_copies: number;
+    reference: string;
+  }
+  
+  export interface InternationalPayload {
+    firstname: string;
+    email: string;
+    phone: string;
+    country: string;
   }
   
   export interface Session {
