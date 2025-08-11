@@ -59,7 +59,7 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
 
   const handleContinue = () => {
     if (donation.copies < 1) {
-      alert("Please select at least 5 copies to donate.");
+      alert("Please select at least 1 copies to donate.");
       return;
     }
     setStep("detailsPayment");
@@ -155,9 +155,9 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
     if (!isOpen) {
       setStep("copySelection");
       setDonation({
-        copies: 5,
-        totalNGN: 5 * config.pricePerCopyNGN,
-        totalUSD: 5 * config.pricePerCopyUSD,
+        copies: 1,
+        totalNGN: 1 * config.pricePerCopyNGN,
+        totalUSD: 1 * config.pricePerCopyUSD,
         name: "",
         email: "",
         phone: "",
@@ -354,8 +354,8 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
                         name="donationCopyCount"
                         className="form-input"
                         placeholder="Enter number of copies (5-10000)"
-                        min="5"
-                        max="10000"
+                        min="1"
+                        max="10000000"
                         step="1"
                         value={donation.copies || 1}
                         onChange={handleInputChange}
@@ -684,7 +684,7 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
                       </div>
                     </motion.div>
                     <motion.div
-                      className="payment-optionsa"
+                      className="payment-optionsa flex flex-col"
                       custom={7}
                       variants={inputVariants}
                       initial="hidden"
