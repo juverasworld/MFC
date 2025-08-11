@@ -828,6 +828,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* will-change: transform, opacity;ssssssssssssssssssssssssssssssss */
   /* padding: 20px; */
 }
 
@@ -1426,6 +1427,9 @@ height: 42px; */
     display: flex;
     flex-direction: row;
     justify-content: center;
+    cursor: pointer;
+      transition: background-color 0.2s ease;
+      will-change: transform, box-shadow;
 
   }
 
@@ -1654,6 +1658,10 @@ font-weight: 600; */
   font-size: 16px;
   transition: transform 0.3s ease;
 }
+.cta-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+}
 
 .cta-button:hover::after {
   transform: translateX(4px);
@@ -1857,8 +1865,8 @@ font-weight: 600; */
 }
 
 .imgs {
-  width: 60px;
-  height: 40px;
+  width: 59px;
+  height: 53px;
   border-radius: 100%;
   background: linear-gradient(135deg, #e5e7eb, #d1d5db);
   display: flex;

@@ -14,37 +14,37 @@ gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
-    text: "Inspired by a painful lived experience, Dr. Victor Otubo wrote this lifesaving masterpiece...",
+    text: "Indeed, the book is a life-course companion. Couples of reproductive age, medical students, researchers, & foreigners who seek basic knowledge of reproductive, maternal & child health in Africa would find 'My Family Companion' incredibly resourceful.",
     author: "Dr. Laz Ude Eze",
     title: "TalkHealth9ja",
     image: testimonial1,
   },
   {
-    text: "In time, My Family Companion will be recognized as one of the greatest family health handbooks ever written...",
+    text: "One of the best family health materials ever written for everyday people. Dr. OVO teaches with a unique voice that draws you in from the first chapter to the very last - only to send you right back to the beginning. It feels like learning from your favorite teacher.",
     author: "Dr. Ifeyinwa Maureen Okeke",
     title: "MWAN",
     image: testimonial2,
   },
   {
-    text: "As a doctor… As a writer… And just as a person… The Family Companion is simply one of the best...",
+    text: "As a doctor… As a writer… And just as a person… My Family Companion is simply one of the best, most relatable 'medically non-medical' books I've ever read. Wow!",
     author: "Dr. Val Oje",
     title: "NASCP, FMOH",
     image: testimonial3,
   },
   {
-    text: "Through incredible series of case presentations by the author, the reader is carried away...",
+    text: "...the reader is carried away by a well-tailored narrative that makes what could have been heaps of boring medical facts into a book that captures one's interest with titbits of valuable information and advice. A must-read for all segments of society.",
     author: "Prof Emeritus Peter O. Ebigbo",
     title: "NACP",
     image: testimonial4,
   },
   {
-    text: "I love the use of relatable stories that humanizes medical topics and keeps the reader engaged...",
+    text: "I love the use of relatable stories that humanize medical topics and keep the reader engaged. From the first chapter, I felt like I was sitting with a trusted family doctor. The tone is clear, warm, and educational, which is perfect for a general audience. ",
     author: "Grace Ihejiamizu-Paul",
     title: "Opportunity Desk",
     image: testimonial5,
   },
   {
-    text: "The author demystifies parenting and maternal health with the warmth of lived experience...",
+    text: "The author demystifies parenting and maternal health with the warmth of lived experience and the clarity of medical expertise. A rich blend of storytelling and science, dismantling dangerous myths and guiding families toward safer, healthier lives.",
     author: "Prof. Paul C. Odinka",
     title: "UNN",
     image: testimonial6,
@@ -133,7 +133,7 @@ const TestimonialSection: React.FC = () => {
                 <div className="testimonial-author">
                   <div className="author-avatar">
                     <img
-                      className="imgss"
+                      className="imgs"
                       src={testimonial.image}
                       alt={testimonial.author}
                     />

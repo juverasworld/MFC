@@ -1,4 +1,183 @@
 
+// .overlay {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     background: rgba(0, 0, 0, 0.5);
+//     z-index: 1000;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+
+//     .overlay-content {
+//         background: white;
+//         padding: 2rem;
+//         border-radius: 10px;
+//         max-width: 500px;
+//         width: 90%;
+//         position: relative;
+//         max-height: 80vh;
+//         overflow-y: auto;
+
+//         .overlay-header {
+//             display: flex;
+//             justify-content: space-between;
+//             align-items: center;
+//             margin-bottom: 1rem;
+
+//             .back-btn {
+//                 background: none;
+//                 border: none;
+//                 font-size: 1.2rem;
+//                 cursor: pointer;
+//                 color: #333;
+//             }
+
+//             .close-btn {
+//                 font-size: 1.5rem;
+//                 cursor: pointer;
+//                 color: #333;
+//             }
+//         }
+
+//         .overlay-title {
+//             font-size: 1.8rem;
+//             margin-bottom: 1rem;
+//             color: #333;
+
+//             .topics-containers {
+//                 .topics-lists {
+//                     list-style: disc;
+//                     padding-left: 20px;
+//                     margin-top: 0.5rem;
+
+//                     li {
+//                         font-size: 1rem;
+//                         color: #333;
+//                         margin-bottom: 0.5rem;
+//                     }
+//                 }
+//             }
+//         }
+
+//         .donate-p {
+//             font-size: 1rem;
+//             color: #555;
+//             margin-bottom: 20px;
+//         }
+
+//         .copy-option {
+//             margin-bottom: 1rem;
+
+//             .copy-option-title {
+//                 font-weight: bold;
+//                 color: #333;
+//             }
+
+//             .copy-option-reward {
+//                 font-size: 0.9rem;
+//                 color: #555;
+//             }
+//         }
+
+//         .form-group {
+//             margin-bottom: 1rem;
+
+//             .form-label {
+//                 display: block;
+//                 font-size: 1rem;
+//                 color: #333;
+//                 margin-bottom: 0.5rem;
+//             }
+
+//             .form-input {
+//                 width: 100%;
+//                 padding: 0.75rem;
+//                 border: 1px solid #ccc;
+//                 border-radius: 5px;
+//                 font-size: 1rem;
+//             }
+//         }
+
+//         .price-container {
+//             margin: 1rem 0;
+//             text-align: center;
+
+//             .current-price,
+//             .current-prices {
+//                 font-size: 1.2rem;
+//                 font-weight: bold;
+//                 color: #1f2d3d;
+//             }
+//         }
+
+//         .confirm-btn {
+//             background: #1f2d3d;
+//             color: white;
+//             padding: 0.75rem 1.5rem;
+//             border: none;
+//             border-radius: 5px;
+//             cursor: pointer;
+//             width: 100%;
+//             font-size: 1rem;
+
+//             &:hover {
+//                 background: #0056b3;
+//             }
+//         }
+
+
+
+//         .donation-form {
+//             .form-group {
+//                 margin-bottom: 1rem;
+
+//                 .form-label {
+//                     display: block;
+//                     font-size: 1rem;
+//                     color: #333;
+//                     margin-bottom: 0.5rem;
+//                 }
+
+//                 .form-input {
+//                     width: 100%;
+//                     padding: 0.75rem;
+//                     border: 1px solid #ccc;
+//                     border-radius: 5px;
+//                     font-size: 1rem;
+//                 }
+//             }
+
+//             .payment-optionsa {
+//                 display: flex;
+//                 gap: 1rem;
+//                 justify-content: center;
+
+//                 .payment-btna {
+//                     background: #1f2d3d;
+//                     color: white;
+//                     padding: 0.75rem 1.5rem;
+//                     border: none;
+//                     border-radius: 5px;
+//                     cursor: pointer;
+//                     font-size: 1rem;
+//                     text-align: center;
+//                     flex: 1;
+
+//                     &:hover {
+//                         background: #0056b3;
+//                     }
+
+//                     &:disabled {
+//                         background: #ccc;
+//                         cursor: not-allowed;
+//                     }
+//                 }
+//             }
+//         }
+//     } }
 .overlay {
     position: fixed;
     top: 0;
@@ -20,6 +199,7 @@
         position: relative;
         max-height: 80vh;
         overflow-y: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
         .overlay-header {
             display: flex;
@@ -33,12 +213,22 @@
                 font-size: 1.2rem;
                 cursor: pointer;
                 color: #333;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #0056b3;
+                }
             }
 
             .close-btn {
                 font-size: 1.5rem;
                 cursor: pointer;
                 color: #333;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #ff4d4f;
+                }
             }
         }
 
@@ -46,6 +236,7 @@
             font-size: 1.8rem;
             margin-bottom: 1rem;
             color: #333;
+            text-align: center;
 
             .topics-containers {
                 .topics-lists {
@@ -66,6 +257,7 @@
             font-size: 1rem;
             color: #555;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .copy-option {
@@ -98,6 +290,12 @@
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 font-size: 1rem;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: #0056b3;
+                    outline: none;
+                }
             }
         }
 
@@ -114,7 +312,8 @@
         }
 
         .confirm-btn {
-            background: #1f2d3d;
+            background: #28a745;
+            /* Green for success */
             color: white;
             padding: 0.75rem 1.5rem;
             border: none;
@@ -122,10 +321,35 @@
             cursor: pointer;
             width: 100%;
             font-size: 1rem;
+            max-width: 200px;
+            /* Limit width for confirmation step */
+            margin: 1rem auto;
+            display: block;
+            transition: background 0.3s;
 
             &:hover {
-                background: #0056b3;
+                background: #218838;
             }
+        }
+
+        .confirmation-message {
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #333;
+            line-height: 1.5;
+
+            &.error {
+                color: #ff4d4f;
+                /* Red for error messages */
+            }
+        }
+
+        .error-message {
+            color: #ff4d4f;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
         .donation-form {
@@ -145,6 +369,12 @@
                     border: 1px solid #ccc;
                     border-radius: 5px;
                     font-size: 1rem;
+                    transition: border-color 0.3s;
+
+                    &:focus {
+                        border-color: #0056b3;
+                        outline: none;
+                    }
                 }
             }
 
@@ -152,6 +382,8 @@
                 display: flex;
                 gap: 1rem;
                 justify-content: center;
+                flex-wrap: wrap;
+                /* Ensure responsiveness */
 
                 .payment-btna {
                     background: #1f2d3d;
@@ -163,6 +395,8 @@
                     font-size: 1rem;
                     text-align: center;
                     flex: 1;
+                    min-width: 150px;
+                    transition: background 0.3s;
 
                     &:hover {
                         background: #0056b3;
@@ -175,4 +409,5 @@
                 }
             }
         }
-    } }
+    }
+}

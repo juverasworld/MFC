@@ -67,29 +67,17 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
           viewport={{ once: false, amount: 0.2 }}
           transition={{ staggerChildren: 0.2 }}
         >
-          <motion.div
-            className="presale-badge"
-            variants={textVariants}
-          >
+          <motion.div className="presale-badge" variants={textVariants}>
             🔥 Limited Time Offer
           </motion.div>
-          <motion.h2
-            className="presale-title"
-            variants={textVariants}
-          >
+          <motion.h2 className="presale-title" variants={textVariants}>
             90-Day Presale
           </motion.h2>
-          <motion.p
-            className="presale-subtitle"
-            variants={textVariants}
-          >
+          <motion.p className="presale-subtitle" variants={textVariants}>
             Get exclusive early access with{" "}
             <span className="spans">free delivery nationwide</span> (Nigeria)
           </motion.p>
-          <motion.div
-            className="price-container"
-            variants={imageVariants}
-          >
+          <motion.div className="price-container" variants={imageVariants}>
             <motion.img
               src={presaleImage}
               alt="Presale Book"
@@ -97,10 +85,7 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
               variants={imageVariants}
             />
           </motion.div>
-          <motion.p
-            className="presale-subtitle"
-            variants={textVariants}
-          >
+          <motion.p className="presale-subtitle" variants={textVariants}>
             30% Discount
           </motion.p>
           <motion.button
@@ -123,10 +108,7 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
           viewport={{ once: false, amount: 0.2 }}
           transition={{ staggerChildren: 0.2 }}
         >
-          <motion.h2
-            className="newsletter-titless"
-            variants={textVariants}
-          >
+          <motion.h2 className="newsletter-titless" variants={textVariants}>
             Join Community
           </motion.h2>
           <motion.ul
@@ -147,11 +129,7 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
                 text: "Join Our Telegram Group",
               },
             ].map((item, index) => (
-              <motion.li
-                key={index}
-                custom={index}
-                variants={listItemVariants}
-              >
+              <motion.li key={index} custom={index} variants={listItemVariants}>
                 <motion.p
                   className={`payment-btn${index === 0 ? "s" : "ss"}`}
                   whileHover={{ scale: 1.05 }}
@@ -165,16 +143,10 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
               </motion.li>
             ))}
           </motion.ul>
-          <motion.h2
-            className="newsletter-titless"
-            variants={textVariants}
-          >
+          <motion.h2 className="newsletter-titless" variants={textVariants}>
             Join the #1 Family Newsletter
           </motion.h2>
-          <motion.p
-            className="newsletter-subtitle"
-            variants={textVariants}
-          >
+          <motion.p className="newsletter-subtitle" variants={textVariants}>
             Every week, we share honest stories, doctor-backed insights, and
             practical guides to help you build a healthy, happy home—now or
             later
@@ -193,7 +165,11 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
               custom={0}
               variants={inputVariants}
             >
-              <label className="form-label" htmlFor="name">
+              <label
+                style={{ color: "white" }}
+                className="form-label "
+                htmlFor="name"
+              >
                 First name
               </label>
               <input
@@ -212,7 +188,11 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
               custom={1}
               variants={inputVariants}
             >
-              <label className="form-label" htmlFor="email">
+              <label
+                style={{ color: "white" }}
+                className="form-label"
+                htmlFor="email"
+              >
                 Email Address
               </label>
               <input
@@ -237,10 +217,7 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
               {isSubmitting ? "Subscribing..." : "Subscribe Now"}
             </motion.button>
           </motion.form>
-          <motion.p
-            className="privacy-note"
-            variants={textVariants}
-          >
+          <motion.p className="privacy-note" variants={textVariants}>
             🔒 We respect your privacy. Unsubscribe at any time. No spam, ever.
           </motion.p>
         </motion.div>
