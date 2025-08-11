@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePaystack } from "../../hooks/usePaystack";
-import type { Config, Donation, LocalPayload, InternationalPayload } from "../../types";
+import type { Config, LocalPayload, InternationalPayload } from "../../types";
 import "./Overlay.scss";
 
 interface PresaleOverlayProps {
