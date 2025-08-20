@@ -216,7 +216,7 @@ It’s more than a guide; it’s a life-saving companion. The stories remind you
       </div>
 
       {/* Popup Container */}
-      {/* <div id="morePopup" className="popup-overlay">
+      <div id="morePopup" className="popup-overlay">
         <div className="popup-content">
           <span className="close-popup" onClick={closeMorePopup}>
             &times;
@@ -256,7 +256,7 @@ It’s more than a guide; it’s a life-saving companion. The stories remind you
             </p>
           </div>
         </div>
-      </div> */}
+      </div>
     </main>
   );
 };

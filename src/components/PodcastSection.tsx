@@ -1690,7 +1690,7 @@ const PodcastSection: React.FC = () => {
               </div>
             </motion.div>
 
-            <style jsx>{`
+            <style>{`
               @keyframes pulse {
                 0%, 100% {
                   opacity: 1;
