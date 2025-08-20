@@ -103,7 +103,7 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
 
   return (
     <div className="body">
-      <div className="containerss">
+      <div className="containerss" >
         {/* Presale Section */}
         <motion.div
           className="presale-section"
@@ -147,6 +147,7 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
         {/* Newsletter Section */}
         <motion.div
           className="newsletter-section"
+          id="join-community"
           ref={sectionRef}
           initial="hidden"
           whileInView="visible"

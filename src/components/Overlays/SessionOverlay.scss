@@ -148,5 +148,21 @@
             margin-bottom: 1rem;
             text-align: center;
         }
+        .redirect-message {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+.calendly-link {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.calendly-link:hover {
+  color: #0056b3;
+}
     }
 }

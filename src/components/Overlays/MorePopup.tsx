@@ -61,6 +61,18 @@ const MorePopup: React.FC<MorePopupProps> = ({ isOpen, closePopup }) => {
             </span>
             <h2 className="popup-title">About My Family Companion</h2>
             <p className="popup-description">
+          Some books give you facts. Others touch your heart. The Family Companion – From Singlehood to Parenthood does both — guiding you with the authority of a doctor and the warmth of a trusted friend
+            </p>
+            <p className="popup-description">
+          In these pages, Dr. OVO blends real-life stories with clear, practical advice, making complex medical truths simple and relatable. From choosing a partner with health in mind to navigating pregnancy and caring for your newborn, this book walks beside you at every stage of family life.
+            </p>
+            <p className="popup-description">
+           It’s more than a guide; it’s a life-saving companion. The stories remind you that these issues are real and close to home, while the advice equips you to act early, wisely, and with confidence.
+            </p>
+            <p className="popup-description">
+             Whether you’re single, married, expecting, or parenting young children, you’ll find in these chapters the knowledge to protect your family — and the inspiration to share it with others. Because love is most powerful when it is informed, and every home deserves a companion like this.
+            </p>
+            <p className="popup-description">
               In <em>My Family Companion</em>, Dr. OVO draws from years of
               medical education and practice, real-life stories, and personal
               experience to guide you through every stage of family life—from

@@ -292,6 +292,19 @@ text-decoration: none;
   margin: 10px 0;
 }
 
+
+.initials-placeholder {
+  width: 50px; /* Match image size */
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ccc; /* Placeholder background color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff; /* Text color for initials */
+  font-size: 18px; /* Adjust font size as needed */
+  font-weight: bold;
+}
 .cta-button {
   background: white;
   color: #ee5a24;
@@ -1264,7 +1277,7 @@ height: 42px; */
 }
 
 .her {
-  text-align: justify;
+  /* text-align: justify; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1279,11 +1292,22 @@ height: 42px; */
   margin-bottom: 24px;
   letter-spacing: -1px;
 }
-
+.form-input::placeholder {
+  color: white;
+}
+.form-input::-webkit-input-placeholder {
+  color: white;
+}
+.form-input::-moz-placeholder {
+  color: white;
+}
+.form-input:-ms-input-placeholder {
+  color: white;
+}
 .hero-descript {
   color: #4a5568;
   /* font-size: 18px; */
-  text-align: justify;
+  /* text-align: justify; */
   font-size: 15px;
 
   line-height: 1.6;

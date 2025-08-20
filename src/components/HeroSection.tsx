@@ -165,16 +165,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         >
           My Family Companion
         </motion.h1>
-        <div className="her">
+        <div className="her ">
+          <p className="hero-descript font-bold text-left" style={{ paddingBottom: "5px", fontWeight:"bold", textAlign:"left" }}>
+            Forward By Dr. Zainab Kwaru, National President, MWAN
+          </p>
           <p className="hero-descript" style={{ paddingBottom: "5px" }}>
-            Building a healthy family starts long before the wedding day, and
-            continues with every decision you make as a parent
+                        Some books give you facts. Others touch your heart. The Family Companion – From Singlehood to Parenthood does both — guiding you with the authority of a doctor and the warmth of a trusted friend.
+
           </p>
           <p className="hero-description" style={{}}>
-            In <em>My Family Companion</em>, Dr. OVO draws from years of medical
-            education and practice, real-life stories, and personal experience
-            to guide you through every stage of family life—from choosing the
-            right partner{" "}
+In these pages, Dr. OVO blends real-life stories with clear, practical advice, making complex medical truths simple and relatable. From choosing a partner with health in mind to navigating pregnancy and caring for your newborn, this book walks beside you at every stage of family life.
+It’s more than a guide; it’s a life-saving companion. The stories remind you that these issues are real and close to home, while the advice equips you to act early, wisely, and with confidence
             <a href="#" className="more-link" onClick={showMorePopup}>
               ... more
             </a>
@@ -215,7 +216,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Popup Container */}
-      <div id="morePopup" className="popup-overlay">
+      {/* <div id="morePopup" className="popup-overlay">
         <div className="popup-content">
           <span className="close-popup" onClick={closeMorePopup}>
             &times;
@@ -255,7 +256,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 };
