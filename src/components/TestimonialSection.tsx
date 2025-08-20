@@ -168,7 +168,7 @@ import testimonial1 from "../assets/WhatsApp Image 2025-07-25 at 23.15.17_633bbe
 import testimonial2 from "../assets/Maureen.jpg";
 import testimonial3 from "../assets/val.png";
 import testimonial4 from "../assets/1.png";
-import testimonial5 from "../assets/IMG_7421.jpg";
+import testimonial5 from "../assets/grace.jpg";
 import testimonial6 from "../assets/prof Paul.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
