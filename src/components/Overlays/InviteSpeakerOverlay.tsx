@@ -68,7 +68,9 @@ const InviteSpeakOverlay: React.FC<InviteSpeakOverlayProps> = ({ isOpen, closeOv
         event_details: formData.inviteDetails,
       };
 
-      const response = await fetch("/api/invite", {
+      // Just a reference here a to what the calling should look like :)
+      // const response = await fetch("/api/invite", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/invite`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,6 +83,7 @@ const InviteSpeakOverlay: React.FC<InviteSpeakOverlayProps> = ({ isOpen, closeOv
         throw new Error(result.message || "Failed to submit invitation request.");
       }
 
+      // console.log(result, response);
       setConfirmationMessage(result.message || "Successfully submitted your invitation request!");
       setStep("confirmation");
 
