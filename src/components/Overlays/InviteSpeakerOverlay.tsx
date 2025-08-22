@@ -70,7 +70,7 @@ const InviteSpeakOverlay: React.FC<InviteSpeakOverlayProps> = ({ isOpen, closeOv
 
       // Just a reference here a to what the calling should look like :)
       // const response = await fetch("/api/invite", {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/invite`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/invite`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
