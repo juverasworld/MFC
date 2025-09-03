@@ -306,7 +306,9 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
       };
 
       // Make API call
-      const response = await fetch("/api/book-paid-session", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/book-paid-session`
+        
+        , {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

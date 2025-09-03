@@ -38,13 +38,18 @@ const PresaleSection: React.FC<PresaleSectionProps> = ({ openOverlay }) => {
         email: formData.email,
       };
 
-      const response = await fetch("/api/subscribe-newsletter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/subscribe-newsletter`,
+
+       
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const result = await response.json();
       if (!response.ok) {

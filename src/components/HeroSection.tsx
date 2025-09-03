@@ -166,8 +166,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           My Family Companion
         </motion.h1>
         <div className="her ">
-          <p className="hero-descript font-bold text-left" style={{ paddingBottom: "5px", fontWeight:"bold", textAlign:"left" }}>
-            Forward By Dr. Zainab Kwaru, National President, MWAN
+          <p className="hero-descript font-bold " style={{ paddingBottom: "5px", fontWeight:"bold", textAlign:"center" }}>
+            Foreward By Dr. Zainab Kwaru, National President, MWAN
           </p>
           <p className="hero-descript" style={{ paddingBottom: "5px" }}>
                         Some books give you facts. Others touch your heart. The Family Companion – From Singlehood to Parenthood does both — guiding you with the authority of a doctor and the warmth of a trusted friend.

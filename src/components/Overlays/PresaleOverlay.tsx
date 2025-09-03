@@ -131,16 +131,18 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
       }
 
       // Make API call
-      const response = await fetch(
-        presaleType === "local" ? "/api/orders/local" : "/api/orders/global",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+    const response = await fetch(
+      presaleType === "local"
+        ? `${import.meta.env.VITE_API_BASE_URL}/orders/local`
+        : `${import.meta.env.VITE_API_BASE_URL}/orders/global`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
 
       const result = await response.json();
       if (!response.ok) {
@@ -339,7 +341,7 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
                         Number of Copies
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         id="presaleQuantity"
                         name="presaleQuantity"
                         className="form-input"
