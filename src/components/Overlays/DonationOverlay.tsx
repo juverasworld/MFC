@@ -88,25 +88,49 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    if (name === "donationCopyCount") {
-      // Allow numbers only; empty or 0 triggers error
-      if (value === "" || /^[0-9]+$/.test(value)) {
-        setDonation({ ...donation, copies: value === "" ? 0 : Number(value) });
-        if (value === "" || Number(value) < 1) {
-          setError("Please enter at least 1 copy.");
-        } else {
-          setError(null);
-        }
+  // const handleInputChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  // ) => {
+  //   const { name, value } = e.target;
+  //   if (name === "donationCopyCount") {
+  //     // Allow numbers only; empty or 0 triggers error
+  //     if (value === "" || /^[0-9]+$/.test(value)) {
+  //       setDonation({ ...donation, copies: value === "" ? 0 : Number(value) });
+  //       if (value === "" || Number(value) < 1) {
+  //         setError("Please enter at least 1 copy.");
+  //       } else {
+  //         setError(null);
+  //       }
+  //     }
+  //   } else {
+  //     setDonation({ ...donation, [name]: value });
+  //   }
+  // };
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  const { name, value } = e.target;
+  if (name === "donationCopyCount") {
+    // Allow numbers only; empty or 0 triggers error
+    if (value === "" || /^[0-9]+$/.test(value)) {
+      const numericValue = value === "" ? 0 : Number(value);
+      const validCopies = numericValue < 1 ? 1 : numericValue;
+      setDonation({
+        ...donation,
+        copies: numericValue,
+        totalNGN: validCopies * config.pricePerCopyNGN,
+        totalUSD: validCopies * config.pricePerCopyUSD,
+      });
+      if (value === "" || numericValue < 1) {
+        setError("Please enter at least 1 copy.");
+      } else {
+        setError(null);
       }
-    } else {
-      setDonation({ ...donation, [name]: value });
     }
-  };
-
+  } else {
+    setDonation({ ...donation, [name]: value });
+  }
+};
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "donationCopyCount") {
@@ -374,7 +398,7 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
                   >
                     <div className="current-price">
                       ₦{donation.totalNGN.toLocaleString("en-NG")} / $
-                      {donation.totalUSD.toLocaleString("en-US")}
+                      {donation.totalUSD.toLocaleString("en-US")} 
                     </div>
                   </motion.div>
                   <motion.button
@@ -784,11 +808,11 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
                         onClick={() => handlePayment("NGN")}
                         disabled={isSubmitting}
                       >
-                        ₦{donation.totalNGN.toLocaleString("en-NG")}
-                        <br />
-                        Local Payment (NGN)
+                        {/* ₦{donation.totalNGN.toLocaleString("en-NG")}
+                        <br /> */}
+                       Proceed to Payment
                       </motion.button>
-                      <motion.button
+                      {/* <motion.button
                         type="button"
                         className="payment-btna"
                         variants={buttonVariants}
@@ -800,7 +824,7 @@ const DonationOverlay: React.FC<DonationOverlayProps> = ({ isOpen, closeOverlays
                         ${donation.totalUSD.toLocaleString("en-US")}
                         <br />
                         Int'l Payment (USD)
-                      </motion.button>
+                      </motion.button> */}
                     </motion.div>
                   </form>
                 </motion.div>

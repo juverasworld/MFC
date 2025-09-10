@@ -98,7 +98,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     hover: { scale: 1.1, transition: { duration: 0.3 } },
   };
   return (
-    <main className="main-content  w-full " >
+    <main className="main-content  w-full ">
       <div className="hero-image" ref={heroRef}>
         <img src={bgImage} alt="Team collaboration" className="main-image" />
         <motion.div
@@ -166,16 +166,31 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           My Family Companion
         </motion.h1>
         <div className="her ">
-          <p className="hero-descript font-bold " style={{ paddingBottom: "5px", fontWeight:"bold", textAlign:"center" }}>
-            Foreward By Dr. Zainab Kwaru, National President, MWAN
+          <p
+            className="hero-descript font-bold "
+            style={{
+              paddingBottom: "5px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Excerpts from Foreword By Dr. Zainab Kwaru, National President, MWAN
           </p>
           <p className="hero-descript" style={{ paddingBottom: "5px" }}>
-                        Some books give you facts. Others touch your heart. The Family Companion – From Singlehood to Parenthood does both — guiding you with the authority of a doctor and the warmth of a trusted friend.
-
+            Some books give you facts. Others touch your heart.
+            <i>My Family Companion – From Singlehood to Parenthood </i>
+            does both — guiding you with the authority of a doctor and the
+            warmth of a trusted friend.
           </p>
           <p className="hero-description" style={{}}>
-In these pages, Dr. OVO blends real-life stories with clear, practical advice, making complex medical truths simple and relatable. From choosing a partner with health in mind to navigating pregnancy and caring for your newborn, this book walks beside you at every stage of family life.
-It’s more than a guide; it’s a life-saving companion. The stories remind you that these issues are real and close to home, while the advice equips you to act early, wisely, and with confidence
+            In these pages, Dr. OVO blends real-life stories with clear,
+            practical advice, making complex medical truths simple and
+            relatable. From choosing a partner with health in mind to navigating
+            pregnancy and caring for your newborn, this book walks beside you at
+            every stage of family life. It’s more than a guide; it’s a
+            life-saving companion. The stories remind you that these issues are
+            real and close to home, while the advice equips you to act early,
+            wisely, and with confidence
             <a href="#" className="more-link" onClick={showMorePopup}>
               ... more
             </a>

@@ -67,12 +67,16 @@ const MorePopup: React.FC<MorePopupProps> = ({ isOpen, closePopup }) => {
                 textAlign: "center",
               }}
             >
-              Foreword by Dr. Zainab Kwaru Mohammed-Idris National President,
+              Excerpts from Foreword Dr. Zainab Kwaru Mohammad-Idris National President,
               Medical Women’s Association of Nigeria
             </h2>
             <p className="popup-description">
-              Some books give you facts. Others touch your heart. The Family
-              Companion – From Singlehood to Parenthood does both — guiding you
+              Some books give you facts. Others touch your heart.
+              <i>
+                 My Family
+              Companion – From Singlehood to Parenthood {" "}
+              </i>
+               does both — guiding you
               with the authority of a doctor and the warmth of a trusted friend
             </p>
             <p className="popup-description">
@@ -94,30 +98,7 @@ const MorePopup: React.FC<MorePopupProps> = ({ isOpen, closePopup }) => {
               love is most powerful when it is informed, and every home deserves
               a companion like this.
             </p>
-            <p className="popup-description">
-              In <em>My Family Companion</em>, Dr. OVO draws from years of
-              medical education and practice, real-life stories, and personal
-              experience to guide you through every stage of family life—from
-              choosing the right partner to raising healthy children. This book
-              is a comprehensive guide that covers critical topics such as:
-            </p>
-            <ul className="popup-list">
-              {[
-                "Choosing a compatible partner for a lasting relationship",
-                "Understanding pregnancy and maternal health",
-                "Navigating parenting challenges with practical advice",
-                "Ensuring family health and well-being through informed decisions",
-              ].map((item, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                >
-                  {item}
-                </motion.li>
-              ))}
-            </ul>
+          
             <motion.button
               className="popup-close-btn"
               whileHover={{ scale: 1.1 }}

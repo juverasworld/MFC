@@ -65,62 +65,103 @@ const getInitials = (name: string) => {
   const lastName = nameParts[nameParts.length - 1];
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 };
-
 const TestimonialSection: React.FC = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     const marqueeContent = marqueeRef.current;
     if (!marqueeContent) return;
 
-    const cards = marqueeContent.querySelectorAll(".testimonial-card");
-    const totalWidth = Array.from(cards).reduce(
-      (sum, card) => sum + card.getBoundingClientRect().width + 16,
-      0
-    ); // 16px for margin
+    // Wait for next tick to ensure DOM is ready
+    setTimeout(() => {
+      const cards = marqueeContent.querySelectorAll(".testimonial-card");
+      if (cards.length === 0) return;
 
-    // Duplicate cards for seamless looping
-    marqueeContent.innerHTML += marqueeContent.innerHTML;
+      // Calculate the width of the first set of cards
+      let totalWidth = 0;
+      const originalCount = testimonials.length;
 
-    gsap.to(marqueeContent, {
-      x: -totalWidth,
-      duration: 20,
-      ease: "none",
-      repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize((x: string) => parseFloat(x) % totalWidth),
-      },
-    });
+      for (let i = 0; i < originalCount; i++) {
+        const card = cards[i] as HTMLElement;
+        if (card) {
+          const rect = card.getBoundingClientRect();
+          const styles = window.getComputedStyle(card);
+          const marginRight = parseFloat(styles.marginRight) || 0;
+          const marginLeft = parseFloat(styles.marginLeft) || 0;
+          totalWidth += rect.width + marginRight + marginLeft;
+        }
+      }
 
-    // Pause on hover
-    cards.forEach((card) => {
-      card.addEventListener("mouseenter", () =>
-        gsap.to(marqueeContent, { timeScale: 0 })
-      );
-      card.addEventListener("mouseleave", () =>
-        gsap.to(marqueeContent, { timeScale: 1 })
-      );
-    });
-
-    // Scroll-triggered fade-in
-    gsap.from(cards, {
-      opacity: 0,
-      y: 50,
-      stagger: 0.2,
-      duration: 0.8,
-      scrollTrigger: {
-        trigger: marqueeRef.current,
-        start: "top 80%",
-        end: "top 20%",
-        toggleActions: "play none none reverse",
-      },
-    });
-
-    return () => {
-      cards.forEach((card) => {
-        card.removeEventListener("mouseenter", () => {});
-        card.removeEventListener("mouseleave", () => {});
+      // Create the infinite smooth animation using modifiers
+      animationRef.current = gsap.to(marqueeContent, {
+        x: -totalWidth,
+        duration: totalWidth / 40, // Adjust speed (40px per second)
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize((x) => {
+            const numX = parseFloat(x);
+            return (numX % totalWidth).toString();
+          }),
+        },
       });
+
+      // Pause/resume on hover
+      const handleMouseEnter = () => {
+        if (animationRef.current) {
+          gsap.to(animationRef.current, { timeScale: 0, duration: 0.3 });
+        }
+      };
+
+      const handleMouseLeave = () => {
+        if (animationRef.current) {
+          gsap.to(animationRef.current, { timeScale: 1, duration: 0.3 });
+        }
+      };
+
+      // Add hover listeners to all cards
+      cards.forEach((card) => {
+        card.addEventListener("mouseenter", handleMouseEnter);
+        card.addEventListener("mouseleave", handleMouseLeave);
+      });
+
+      // Scroll-triggered fade-in animation
+      gsap.fromTo(
+        cards,
+        {
+          opacity: 0,
+          y: 50,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: marqueeRef.current,
+            start: "top 80%",
+            end: "top 20%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Cleanup function for event listeners
+      return () => {
+        cards.forEach((card) => {
+          card.removeEventListener("mouseenter", handleMouseEnter);
+          card.removeEventListener("mouseleave", handleMouseLeave);
+        });
+      };
+    }, 50);
+
+    // Main cleanup function
+    return () => {
+      if (animationRef.current) {
+        animationRef.current.kill();
+      }
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
@@ -130,10 +171,15 @@ const TestimonialSection: React.FC = () => {
         <div className="section-header">
           <div className="section-label">Praise Report & Expert Reviews</div>
         </div>
-        <div className="testimonials-marquee">
-          <div className="marquee-content" ref={marqueeRef}>
-            {testimonials.map((testimonial, index) => (
-              <div className="testimonial-card" key={index}>
+        <div className="testimonials-marquee" style={{ overflow: "hidden" }}>
+          <div
+            className="marquee-content"
+            ref={marqueeRef}
+            style={{ display: "flex" }}
+          >
+            {/* Render testimonials twice for seamless loop */}
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <div className="testimonial-card" key={`testimonial-${index}`}>
                 <div className="stars">
                   {Array(5)
                     .fill(0)
@@ -171,5 +217,111 @@ const TestimonialSection: React.FC = () => {
     </div>
   );
 };
-
 export default TestimonialSection;
+// const TestimonialSection: React.FC = () => {
+//   const marqueeRef = useRef<HTMLDivElement>(null);
+
+//   useEffect(() => {
+//     const marqueeContent = marqueeRef.current;
+//     if (!marqueeContent) return;
+
+//     const cards = marqueeContent.querySelectorAll(".testimonial-card");
+//     const totalWidth = Array.from(cards).reduce(
+//       (sum, card) => sum + card.getBoundingClientRect().width + 16,
+//       0
+//     ); // 16px for margin
+
+//     // Duplicate cards for seamless looping
+//     marqueeContent.innerHTML += marqueeContent.innerHTML;
+
+//     gsap.to(marqueeContent, {
+//       x: -totalWidth,
+//       duration: 20,
+//       ease: "none",
+//       repeat: -1,
+//       modifiers: {
+//         x: gsap.utils.unitize((x: string) => parseFloat(x) % totalWidth),
+//       },
+//     });
+
+//     // Pause on hover
+//     cards.forEach((card) => {
+//       card.addEventListener("mouseenter", () =>
+//         gsap.to(marqueeContent, { timeScale: 0 })
+//       );
+//       card.addEventListener("mouseleave", () =>
+//         gsap.to(marqueeContent, { timeScale: 1 })
+//       );
+//     });
+
+//     // Scroll-triggered fade-in
+//     gsap.from(cards, {
+//       opacity: 0,
+//       y: 50,
+//       stagger: 0.2,
+//       duration: 0.8,
+//       scrollTrigger: {
+//         trigger: marqueeRef.current,
+//         start: "top 80%",
+//         end: "top 20%",
+//         toggleActions: "play none none reverse",
+//       },
+//     });
+
+//     return () => {
+//       cards.forEach((card) => {
+//         card.removeEventListener("mouseenter", () => {});
+//         card.removeEventListener("mouseleave", () => {});
+//       });
+//     };
+//   }, []);
+
+//   return (
+//     <div className="body">
+//       <div className="testimonial-section">
+//         <div className="section-header">
+//           <div className="section-label">Praise Report & Expert Reviews</div>
+//         </div>
+//         <div className="testimonials-marquee">
+//           <div className="marquee-content" ref={marqueeRef}>
+//             {testimonials.map((testimonial, index) => (
+//               <div className="testimonial-card" key={index}>
+//                 <div className="stars">
+//                   {Array(5)
+//                     .fill(0)
+//                     .map((_, i) => (
+//                       <span className="star" key={i}>
+//                         ★
+//                       </span>
+//                     ))}
+//                 </div>
+//                 <p className="testimonial-text">"{testimonial.text}"</p>
+//                 <div className="testimonial-author">
+//                   <div className="author-avatar">
+//                     {testimonial.image && testimonial.image !== "NA" ? (
+//                       <img
+//                         className="imgs"
+//                         src={testimonial.image}
+//                         alt={testimonial.author}
+//                       />
+//                     ) : (
+//                       <div className="initials-placeholder">
+//                         {getInitials(testimonial.author)}
+//                       </div>
+//                     )}
+//                   </div>
+//                   <div className="author-info">
+//                     <div className="author-name">{testimonial.author}</div>
+//                     <div className="author-title">{testimonial.title}</div>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default TestimonialSection;
