@@ -751,7 +751,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
-import { X, Play, Calendar, Clock, CheckCircle } from "lucide-react";
+import { X, Play,  } from "lucide-react";
 
 interface Podcast {
   title: string;
