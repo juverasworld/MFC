@@ -706,7 +706,10 @@ export default function BookLaunchPage() {
                 style={{ marginBottom: "20px", marginTop: "20px" }}
                 variants={childVariants}
               >
-                <span style={{padding:"8px"}} className="inline-block px-8 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full border border-primary/20 mb-6">
+                <span
+                  style={{ padding: "8px" }}
+                  className="inline-block px-8 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full border border-primary/20 mb-6"
+                >
                   Book Launch Event
                 </span>
               </motion.div>
@@ -821,7 +824,11 @@ export default function BookLaunchPage() {
         >
           <div className="max-w-7xl mx-auto px-8 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div variants={childVariants}>
+              {/* Content block */}
+              <motion.div
+                variants={childVariants}
+                className="order-2 lg:order-1"
+              >
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 lg:text-left text-center">
                   Mother of the Day
                 </h2>
@@ -840,7 +847,12 @@ export default function BookLaunchPage() {
                   Get Notified
                 </Button>
               </motion.div>
-              <motion.div className="relative" variants={childVariants}>
+
+              {/* Image block */}
+              <motion.div
+                className="relative order-1 lg:order-2"
+                variants={childVariants}
+              >
                 <div className="aspect-[3/4] flex items-center justify-center">
                   <motion.img
                     src="/Zinab.JPG"
@@ -944,7 +956,7 @@ export default function BookLaunchPage() {
                   life-saving companion. And every home deserves a companion
                   like this.
                 </p>
-               
+
                 <Button
                   size="lg"
                   className="text-lg px-8 py-4 lg:w-48 w-full h-12"
