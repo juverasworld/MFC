@@ -796,7 +796,7 @@ export default function BookLaunchPage() {
                   Father of the Day -
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
-                  Anyim Pius Anyim
+                 Sen. Anyim Pius Anyim
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
                   Distinguished Guest & Father of the Day
