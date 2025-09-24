@@ -396,7 +396,7 @@ const NewsletterPopup = ({
                   className="text-muted-foreground mb-6 text-center"
                   variants={childVariants}
                 >
-                  Enter your details to stay updated on the MyFamilyCompanion
+                  Enter your details to stay updated on the My Family Companion
                   launch.
                 </motion.p>
                 <motion.div variants={childVariants}>
@@ -663,7 +663,7 @@ export default function BookLaunchPage() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3, duration: 0.4 }}
                 >
-                  MyFamilyCompanion
+                  My Family Companion
                 </motion.span>
               </div>
               <motion.div
@@ -706,7 +706,7 @@ export default function BookLaunchPage() {
                 style={{ marginBottom: "20px", marginTop: "20px" }}
                 variants={childVariants}
               >
-                <span className="inline-block px-4 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full border border-primary/20 mb-6">
+                <span style={{padding:"8px"}} className="inline-block px-8 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full border border-primary/20 mb-6">
                   Book Launch Event
                 </span>
               </motion.div>
@@ -718,7 +718,7 @@ export default function BookLaunchPage() {
               >
                 <span className="text-foreground">Launching</span>
                 <br />
-                <span className="text-primary">MyFamilyCompanion</span>
+                <span className="text-primary">My Family Companion</span>
               </motion.h1>
               <motion.div
                 className="flex justify-center items-center"
@@ -726,8 +726,8 @@ export default function BookLaunchPage() {
                 variants={childVariants}
               >
                 <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto border-2 border-primary/20 p-4 rounded-lg bg-primary/10">
-                  A transformative guide to strengthening family bonds and
-                  creating lasting memories together
+                  A transformative guide to strengthening family family health
+                  that combats maternal, and infact, mortalities
                 </p>
               </motion.div>
 
@@ -790,17 +790,15 @@ export default function BookLaunchPage() {
               </motion.div>
               <motion.div variants={childVariants}>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 lg:text-left text-center">
-                  Father of the Day - Anyim Pius Anyim
+                  Father of the Day -
                 </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
+                  Anyim Pius Anyim
+                </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
                   Distinguished Guest & Father of the Day
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  We are honored to have Anyim Pius Anyim as our Father of the
-                  Day for this momentous occasion. His wisdom, dedication to
-                  family values, and commitment to community make him the
-                  perfect representative for the launch of MyFamilyCompanion.
-                </p>
+
                 <Button
                   size="lg"
                   className="text-lg px-8 py-4 lg:w-48 w-full h-12"
@@ -808,6 +806,51 @@ export default function BookLaunchPage() {
                 >
                   Get Notified
                 </Button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.section>
+        <motion.section
+          id="abouts"
+          className="py-20 bg-card/50"
+          style={{ paddingLeft: "8px", paddingRight: "8px" }}
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <div className="max-w-7xl mx-auto px-8 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div variants={childVariants}>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 lg:text-left text-center">
+                  Mother of the Day
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
+                  Dr. Zainab Kwaru
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
+                  Distinguished Guest & Mother of the Day
+                </p>
+
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-4 lg:w-48 w-full h-12"
+                  onClick={() => setIsPopupOpen(true)}
+                >
+                  Get Notified
+                </Button>
+              </motion.div>
+              <motion.div className="relative" variants={childVariants}>
+                <div className="aspect-[3/4] flex items-center justify-center">
+                  <motion.img
+                    src="/Zinab.JPG"
+                    className="rounded-tl-[44px] rounded-br-[44px]"
+                    alt=""
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  />
+                </div>
               </motion.div>
             </div>
           </div>
@@ -846,7 +889,7 @@ export default function BookLaunchPage() {
                 </h3>
                 <p className="text-muted-foreground">
                   30 Sept 2025
-                  <br />7 PM - 10:00 PM
+                  <br />7 PM - 8:00 PM WAT(Lagos)
                 </p>
               </Card>
 
@@ -855,7 +898,7 @@ export default function BookLaunchPage() {
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   Location
                 </h3>
-                <p className="text-muted-foreground">Zoom</p>
+                <p className="text-muted-foreground">Youtube</p>
               </Card>
 
               <Card className="p-6 text-center">
@@ -864,10 +907,11 @@ export default function BookLaunchPage() {
                   Special Features
                 </h3>
                 <p className="text-muted-foreground">
-                  Book Signing
+                  Book Donations
                   <br />
-                  Family Activities
+                  Q&A Sessions
                   <br />
+                  Goodwill Messages
                 </p>
               </Card>
             </motion.div>
@@ -894,19 +938,13 @@ export default function BookLaunchPage() {
                   className="text-lg text-muted-foreground leading-relaxed mb-6 p-4"
                   style={{ paddingTop: "8px" }}
                 >
-                  MyFamilyCompanion is more than just a book—it's a
-                  comprehensive guide to building stronger family relationships,
-                  creating meaningful traditions, and fostering love that lasts
-                  generations.
+                  My Family Companion – From Singlehood to Parenthood is more
+                  than a book — it’s a trusted guide for life’s most important
+                  journey — Family. But it’s more than a guide; it’s also a
+                  life-saving companion. And every home deserves a companion
+                  like this.
                 </p>
-                <p
-                  className="text-lg text-muted-foreground leading-relaxed mb-8"
-                  style={{ paddingTop: "8px" }}
-                >
-                  Discover practical strategies, heartwarming stories, and
-                  actionable insights that will transform your family dynamics
-                  and create a legacy of love and unity.
-                </p>
+               
                 <Button
                   size="lg"
                   className="text-lg px-8 py-4 lg:w-48 w-full h-12"
@@ -947,7 +985,7 @@ export default function BookLaunchPage() {
               >
                 <img src="/logo.jpg" alt="" className="w-[50px]" />
                 <span className="text-xl font-bold text-foreground">
-                  MyFamilyCompanion
+                  My Family Companion
                 </span>
               </motion.div>
               <motion.p
@@ -960,7 +998,7 @@ export default function BookLaunchPage() {
                 className="text-sm text-muted-foreground"
                 variants={childVariants}
               >
-                © 2025 MyFamilyCompanion. All rights reserved.
+                © 2025 My Family Companion. All rights reserved.
               </motion.p>
             </div>
           </div>
