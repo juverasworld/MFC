@@ -954,7 +954,7 @@ export default function BookLaunchPage() {
                   than a book — it’s a trusted guide for life’s most important
                   journey — Family. But it’s more than a guide; it’s also a
                   life-saving companion. And every home deserves a companion
-                  like this.
+                  like this. <br /> -Dr. Zainab Kwaru Mohammad-Idris
                 </p>
 
                 <Button
