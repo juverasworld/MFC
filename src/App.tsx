@@ -730,7 +730,7 @@ export default function BookLaunchPage() {
               >
                 <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto border-2 border-primary/20 p-4 rounded-lg bg-primary/10">
                   A transformative guide to strengthening family family health
-                  that combats maternal, and infact, mortalities
+                  that combats maternal, infant, and child mortalities.
                 </p>
               </motion.div>
 
