@@ -480,6 +480,132 @@ interface TimeLeft {
   seconds: number;
 }
 
+// function CountdownTimer() {
+//   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+//     days: 0,
+//     hours: 0,
+//     minutes: 0,
+//     seconds: 0,
+//   });
+
+//   useEffect(() => {
+//     const targetDate = new Date();
+//     targetDate.setDate(targetDate.getDate() + 8);
+
+//     const timer = setInterval(() => {
+//       const now = new Date().getTime();
+//       const distance = targetDate.getTime() - now;
+
+//       if (distance > 0) {
+//         setTimeLeft({
+//           days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+//           hours: Math.floor(
+//             (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+//           ),
+//           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+//           seconds: Math.floor((distance % (1000 * 60)) / 1000),
+//         });
+//       } else {
+//         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+//       }
+//     }, 1000);
+
+//     return () => clearInterval(timer);
+//   }, []);
+
+//   // Countdown animation variants
+//   const timerVariants: Variants = {
+//     hidden: { opacity: 0, scale: 0.8 },
+//     visible: {
+//       opacity: 1,
+//       scale: 1,
+//       transition: {
+//         staggerChildren: 0.1,
+//         type: "spring",
+//         stiffness: 100,
+//         damping: 15,
+//       },
+//     },
+//   };
+
+//   const timerChildVariants: Variants = {
+//     hidden: { opacity: 0, y: 10 },
+//     visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+//   };
+
+//   return (
+//     <motion.div
+//       className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-center"
+//       variants={timerVariants}
+//       initial="hidden"
+//       animate="visible"
+//     >
+//       <motion.div
+//         className="flex flex-col items-center"
+//         variants={timerChildVariants}
+//       >
+//         <div className="text-4xl sm:text-6xl md:text-8xl font-bold text-primary font-mono">
+//           {timeLeft.days.toString().padStart(2, "0")}
+//         </div>
+//         <div className="text-xs sm:text-sm md:text-base text-muted-foreground uppercase tracking-wider mt-2">
+//           Days
+//         </div>
+//       </motion.div>
+//       <motion.div
+//         className="text-2xl sm:text-4xl md:text-6xl text-primary"
+//         variants={timerChildVariants}
+//       >
+//         :
+//       </motion.div>
+//       <motion.div
+//         className="flex flex-col items-center"
+//         variants={timerChildVariants}
+//       >
+//         <div className="text-4xl sm:text-6xl md:text-8xl font-bold text-primary font-mono">
+//           {timeLeft.hours.toString().padStart(2, "0")}
+//         </div>
+//         <div className="text-xs sm:text-sm md:text-base text-muted-foreground uppercase tracking-wider mt-2">
+//           Hours
+//         </div>
+//       </motion.div>
+//       <motion.div
+//         className="text-2xl sm:text-4xl md:text-6xl text-primary"
+//         variants={timerChildVariants}
+//       >
+//         :
+//       </motion.div>
+//       <motion.div
+//         className="flex flex-col items-center"
+//         variants={timerChildVariants}
+//       >
+//         <div className="text-4xl sm:text-6xl md:text-8xl font-bold text-primary font-mono">
+//           {timeLeft.minutes.toString().padStart(2, "0")}
+//         </div>
+//         <div className="text-xs sm:text-sm md:text-base text-muted-foreground uppercase tracking-wider mt-2">
+//           Minutes
+//         </div>
+//       </motion.div>
+//       <motion.div
+//         className="text-2xl sm:text-4xl md:text-6xl text-primary"
+//         variants={timerChildVariants}
+//       >
+//         :
+//       </motion.div>
+//       <motion.div
+//         className="flex flex-col items-center"
+//         variants={timerChildVariants}
+//       >
+//         <div className="text-4xl sm:text-6xl md:text-8xl font-bold text-primary font-mono">
+//           {timeLeft.seconds.toString().padStart(2, "0")}
+//         </div>
+//         <div className="text-xs sm:text-sm md:text-base text-muted-foreground uppercase tracking-wider mt-2">
+//           Seconds
+//         </div>
+//       </motion.div>
+//     </motion.div>
+//   );
+// }
+// Updated CountdownTimer Component with fixed target date
 function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
@@ -489,8 +615,9 @@ function CountdownTimer() {
   });
 
   useEffect(() => {
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 8);
+    // Fixed target date: September 30, 2025 at 7:00 PM WAT (Lagos time)
+    // WAT is UTC+1, so 7:00 PM WAT = 6:00 PM UTC
+    const targetDate = new Date('2025-09-30T18:00:00.000Z'); // 6:00 PM UTC = 7:00 PM WAT
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -506,9 +633,25 @@ function CountdownTimer() {
           seconds: Math.floor((distance % (1000 * 60)) / 1000),
         });
       } else {
+        // Timer has ended
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        clearInterval(timer);
       }
     }, 1000);
+
+    // Clean up initial calculation
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
+    if (distance > 0) {
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        ),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+      });
+    }
 
     return () => clearInterval(timer);
   }, []);
@@ -605,7 +748,6 @@ function CountdownTimer() {
     </motion.div>
   );
 }
-
 // Main BookLaunchPage Component
 export default function BookLaunchPage() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -796,7 +938,7 @@ export default function BookLaunchPage() {
                   Father of the Day -
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
-                 Sen. Anyim Pius Anyim
+                  Sen. Anyim Pius Anyim
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
                   Distinguished Guest & Father of the Day
@@ -954,7 +1096,7 @@ export default function BookLaunchPage() {
                   than a book — it’s a trusted guide for life’s most important
                   journey — Family. But it’s more than a guide; it’s also a
                   life-saving companion. And every home deserves a companion
-                  like this. <br /> -Dr. Zainab Kwaru Mohammad-Idris
+                  like this. <br /> -Dr. Zainab Kwaru Muhammad-Idris
                 </p>
 
                 <Button
