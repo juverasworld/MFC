@@ -216,7 +216,7 @@ const config: Config = {
   amazonLink: import.meta.env.VITE_AMAZON_LINK || "https://www.amazon.com/your-book-link",
   paystackPublicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
 };
-const CALENDLY_URL = "https://calendly.com/your-calendly-link";
+const CALENDLY_URL = "https://calendly.com/standconsults/30min";
 
 const SessionOverlay: React.FC<SessionOverlayProps> = ({ isOpen, closeOverlays }) => {
   const [step, setStep] = useState<"form" | "confirmation">("form");
