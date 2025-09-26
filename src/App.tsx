@@ -284,7 +284,7 @@ const NewsletterPopup = ({
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/subscribe-newsletter`,
+        `${import.meta.env.VITE_API_BASE_URL}/subscribe-timer-newsletter`,
         {
           method: "POST",
           headers: {
@@ -293,6 +293,8 @@ const NewsletterPopup = ({
           body: JSON.stringify({ name, email }),
         }
       );
+
+    console.log(response);
 
       if (response.ok) {
         setStatus("success");
