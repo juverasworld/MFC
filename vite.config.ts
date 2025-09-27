@@ -21,7 +21,7 @@ export default defineConfig({
 //   server: {
 //     proxy: {
 //       "/api": {
-//         target: "https://apime.myfamilycompanion.com",
+//         target: "https://apime.myfamilycompanion.org",
 //         changeOrigin: true,
 //         rewrite: (path) => path.replace(/^\/api/, "/api/v1"),
 //       },

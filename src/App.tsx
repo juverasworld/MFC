@@ -284,7 +284,7 @@ const NewsletterPopup = ({
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/subscribe-newsletter`,
+        `${import.meta.env.VITE_API_BASE_URL}/subscribe-timer-newsletter`,
         {
           method: "POST",
           headers: {
@@ -975,7 +975,7 @@ export default function BookLaunchPage() {
                   Mother of the Day
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
-                  Dr. Zainab Kwaru
+                  Dr. Zainab Kwaru Muhammad-Idris
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
                   Distinguished Guest & Mother of the Day

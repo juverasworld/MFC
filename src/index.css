@@ -2576,6 +2576,7 @@ font-weight: 600; */
 
 .session-option:hover {
   background: #f7fafc;
+  cursor: pointer;
 }
 
 /* Ensure parent containers don't clip the dropdown */
