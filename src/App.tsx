@@ -294,8 +294,6 @@ const NewsletterPopup = ({
         }
       );
 
-    console.log(response);
-
       if (response.ok) {
         setStatus("success");
         setName("");
@@ -977,7 +975,7 @@ export default function BookLaunchPage() {
                   Mother of the Day
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
-                  Dr. Zainab Kwaru
+                  Dr. Zainab Kwaru Muhammad-Idris
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 lg:text-left text-center">
                   Distinguished Guest & Mother of the Day
