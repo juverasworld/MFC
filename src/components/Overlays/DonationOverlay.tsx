@@ -16,7 +16,8 @@ const config: Config = {
   pricePerCopyUSD: 15,
   sessionPriceNGN: 75000,
   sessionPriceUSD: 50,
-  amazonLink: "https://www.amazon.com/your-book-link",
+  amazonLink:
+    "https://www.amazon.com/Family-Companion-Singlehood-Parenthood-Collection/dp/9787776341/ref=mp_s_a_1_1?dib=eyJ2IjoiMSJ9.jWnxYcZPuivIIbtAVmBJHg.qw5PJKIJJ1zQ2m8t9LCqATR0KhEKrTioDEKzxJQusEw&dib_tag=se&keywords=My+family+companion+by+Dr.+OVO&qid=1759224711&sr=8-1",
   paystackPublicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
 };
 
