@@ -86,7 +86,8 @@ const Header: React.FC<HeaderProps> = ({ openOverlay }) => {
   }, []);
 
   const navLinks = [
-    { href: "./blog.html", label: "Blog" },
+    { href: "/book", label: "Blog" },
+    // { href: "./blog.html", label: "Blog" },
     { href: "#join-community", label: "Join Community" },
     { href: "#events", label: "Events" },
     { href: "#Podcast", label: "Podcast" },
