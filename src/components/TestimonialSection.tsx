@@ -7,7 +7,8 @@ import testimonial2 from "../assets/Maureen.jpg";
 import testimonial3 from "../assets/val.png";
 import testimonial4 from "../assets/1.png";
 import testimonial5 from "../assets/grace.jpg";
-import testimonial7 from "./Zinab.jpg";
+// import testimonial7 from "./zinab.jpg";
+import testimonial8 from "../assets/zinab copy 2.jpg"
 import testimonial6 from "../assets/prof Paul.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,7 +24,7 @@ const testimonials = [
     text: "My Family Companion – From Singlehood to Parenthood is more than a book — it’s a trusted guide for life’s most important journey — Family. But it’s more than a guide; it’s also a life-saving companion. And every home deserves a companion like this.",
     author: "Dr. Zainab Kwaru",
     title: "National President, MWAN",
-    image: testimonial7,
+    image: testimonial8,
     // image: "NA",
   },
   {
