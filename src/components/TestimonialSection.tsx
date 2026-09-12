@@ -7,7 +7,7 @@ import testimonial2 from "../assets/Maureen.jpg";
 import testimonial3 from "../assets/val.png";
 import testimonial4 from "../assets/1.png";
 import testimonial5 from "../assets/grace.jpg";
-import testimonial7 from "../assets/Zinab.jpg";
+import testimonial7 from "./Zinab.jpg";
 import testimonial6 from "../assets/prof Paul.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
