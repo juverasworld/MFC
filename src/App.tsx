@@ -23,10 +23,12 @@ import PresaleOverlay from "./components/Overlays/PresaleOverlay";
 import Footer from "./components/Footer";
 import InviteSpeakOverlay from "./components/Overlays/InviteSpeakerOverlay";
 import BookSales from "./pages/BookSales"
+import AffiliateExperience from "./pages/AffiliateExperience"
 
 function AppContent() {
   const location = useLocation();
   const isBookPage = location.pathname === "/book";
+  const isCompanionPage = location.pathname.startsWith("/companion") || location.pathname.toLowerCase() === "/affiliateexperience";
 
   const [isDonationOpen, setIsDonationOpen] = useState(false);
   const [isPresaleOpen, setIsPresaleOpen] = useState(false);
@@ -97,10 +99,12 @@ function AppContent() {
   return (
     <div className="app">
       {/* Header only on non-book pages */}
-      {!isBookPage && <Header openOverlay={openOverlay} />}
+      {!isBookPage && !isCompanionPage && <Header openOverlay={openOverlay} />}
 
       <main>
         <Routes>
+          <Route path="/companion" element={<AffiliateExperience />} />
+          <Route path="/AffiliateExperience" element={<AffiliateExperience />} />
           {/* Home page */}
           <Route
             path="/"
@@ -144,7 +148,7 @@ function AppContent() {
       </AnimatePresence>
 
       {/* Back to top – only on non-book pages */}
-      {!isBookPage && (
+      {!isBookPage && !isCompanionPage && (
         <motion.a
           href="#"
           id="back-to-top"
@@ -163,7 +167,7 @@ function AppContent() {
       )}
 
       {/* Footer only on non-book pages */}
-      {!isBookPage && <Footer />}
+      {!isBookPage && !isCompanionPage && <Footer />}
     </div>
   );
 }
