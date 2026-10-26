@@ -145,6 +145,7 @@ Needs to review promoter registration/attribution exceptions, reconcile eligible
 | S-07 | Mission landing page | `/landing` introduces MFC's family-health mission, founder story, life-stage coverage, book, and roadmap. It uses only approved claims, separates vision goals from measured results, and offers clear book and promoter paths. |
 | S-08 | Short landing page | Keeps the public story focused on the purpose, Dr. OVO's attributed origin story, six life stages, and the two priced actions without repeating sections or calls to action. |
 | S-09 | Promoter checkout | Collects registration details and an optional referral/sponsor code; shows ₦5,000 as separate from the book; activates the advocate only after verified payment and successful MFC registration. |
+| S-10 | Testimonials | Shows approved, accurately attributed reader/expert quotes in a GSAP marquee with pause/resume, pause-on-hover/focus, and reduced-motion support; does not fabricate reviews or rating scores. |
 
 ### P0: Promoter portal
 
