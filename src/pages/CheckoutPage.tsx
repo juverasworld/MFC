@@ -3,23 +3,20 @@ import type { FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import bookPhoto from "../assets/WhatsApp Image 2025-07-09 at 08.47.50_9462555c.jpg";
 import { phoneCountries } from "../data/phoneCountries";
+import { paymentApiUrl, requestJson } from "../lib/api";
+import { paymentAmountNgn } from "../../shared/paymentCatalog.js";
 import "./CheckoutPage.css";
 
 type Product = "book" | "promoter";
 type PaymentState = "idle" | "loading" | "verifying" | "success" | "error";
 type AdvocateSession = { token: string; name?: string; email?: string; phone?: string };
 const offers = {
-  book: { title: "My Family Companion", detail: "Book purchase", amount: 30000, button: "Continue to secure payment" },
-  promoter: { title: "MFC Health Advocate", detail: "One-time program registration", amount: 5000, button: "Continue to secure payment" },
+  book: { title: "My Family Companion", detail: "Book purchase", amount: paymentAmountNgn("book"), button: "Continue to secure payment" },
+  promoter: { title: "MFC Health Advocate", detail: "One-time program registration", amount: paymentAmountNgn("promoter"), button: "Continue to secure payment" },
 };
 
-async function readApiResponse(response: Response) {
-  try {
-    return await response.json();
-  } catch {
-    throw new Error("Secure checkout isn't connected in this preview yet. Contact MFC to complete payment.");
-  }
-}
+type PaymentVerification = { success: boolean; product?: Product; error?: string };
+type PaymentInitialization = { authorizationUrl: string; reference: string };
 
 function readAdvocateSession(): AdvocateSession | null {
   try {
@@ -35,7 +32,7 @@ export default function CheckoutPage() {
   const product: Product = searchParams.get("product") === "promoter" ? "promoter" : "book";
   const referralId = searchParams.get("ref")?.trim() || "";
   const advocateSession = product === "promoter" ? readAdvocateSession() : null;
-  const offer = product === "book" && referralId ? { ...offers.book, amount: 25000, detail: "MFC advocate referral price" } : offers[product];
+  const offer = product === "book" && referralId ? { ...offers.book, amount: paymentAmountNgn("book", true), detail: "MFC advocate referral price" } : offers[product];
   const reference = searchParams.get("reference") || searchParams.get("trxref");
   const [paymentState, setPaymentState] = useState<PaymentState>(reference ? "verifying" : "idle");
   const [confirmedProduct, setConfirmedProduct] = useState<Product | null>(null);
@@ -52,12 +49,11 @@ export default function CheckoutPage() {
     let cancelled = false;
     const verify = async () => {
       try {
-        const response = await fetch("/api/payments/verify", {
+        const data = await requestJson<PaymentVerification>(paymentApiUrl("payments/verify"), {
           method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ reference }),
         });
-        const data = await readApiResponse(response);
         if (cancelled) return;
-        if (!response.ok || !data.success) throw new Error(data.error || "We couldn't confirm this payment yet. Contact MFC support with your payment reference.");
+        if (!data.success) throw new Error(data.error || "We couldn't confirm this payment yet. Contact MFC support with your payment reference.");
         if (data.product === "book" || data.product === "promoter") setConfirmedProduct(data.product);
         if (data.product === "promoter") sessionStorage.setItem("mfc_advocate_paid_reference", reference);
         setPaymentState("success");
@@ -80,7 +76,7 @@ export default function CheckoutPage() {
     phoneDigits = phoneDigits.replace(/^0+/, "");
     const internationalPhone = `${selectedCountry.dialCode}${phoneDigits}`;
     try {
-      const response = await fetch("/api/payments/initialize", {
+      const data = await requestJson<PaymentInitialization>(paymentApiUrl("payments/initialize"), {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
           ...form,
           product,
@@ -90,8 +86,7 @@ export default function CheckoutPage() {
           referralCode: product === "book" ? referralId : form.referralCode,
         }),
       });
-      const data = await readApiResponse(response);
-      if (!response.ok || !data.authorizationUrl) throw new Error(data.error || "Secure checkout is not available right now. Please try again later.");
+      if (!data.authorizationUrl) throw new Error("Secure checkout is not available right now. Please try again later.");
       if (product === "promoter") sessionStorage.setItem("mfc_promoter_pending", JSON.stringify({ name: form.name, email: form.email, phone: internationalPhone, country: selectedCountry.name, countryCode: selectedCountry.cca2, referralCode: form.referralCode }));
       window.location.assign(data.authorizationUrl);
     } catch (error) {
@@ -115,6 +110,7 @@ export default function CheckoutPage() {
               <span className="checkout-eyebrow">{isPromoter ? "JOIN THE COMMUNITY" : "GET YOUR COPY"}</span>
               <h1>{isPromoter ? "Become an MFC Health Advocate." : "Bring the guide home."}</h1>
               <p className="checkout-intro">{isPromoter ? "An MFC Health Advocate introduces families to the book, shares approved MFC resources and earns commission on eligible referred sales. It is a referral role, not a clinical role." : referralId ? "You came through an MFC advocate. This book is ₦25,000 with the referral; direct MFC purchases are ₦30,000." : "A practical guide for the questions families carry through pregnancy, birth and the early years. Buy directly from MFC for ₦30,000."}</p>
+              {isPromoter && <p className="checkout-auth-switch">Already an MFC advocate? <Link to={`/advocate/login${referralId ? `?ref=${encodeURIComponent(referralId)}` : ""}`}>Sign in to your account</Link></p>}
               {isPromoter && <div className="advocate-explainer">
                 <div><b>What the ₦5,000 registration includes</b><span>Official advocate status and ID · your personal referral link · training and approved sharing resources · sales and commission dashboard</span></div>
                 <details><summary>How commissions work</summary><p>Illustrative rates on eligible ₦25,000 advocate-referred book sales: direct (L1) 20%, L2 10%, L3 5%, L4 5%. Commissions depend on approved program rules and eligible sales; income is not guaranteed.</p></details>

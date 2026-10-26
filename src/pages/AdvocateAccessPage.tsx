@@ -2,21 +2,14 @@ import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { phoneCountries } from "../data/phoneCountries";
+import { mfcApiUrl, requestJson } from "../lib/api";
 import "./AdvocateAccessPage.css";
 
 type Mode = "join" | "login";
-
-function apiV1Base() {
-  const base = String(import.meta.env.VITE_API_BASE_URL || "").trim().replace(/\/+$/, "");
-  if (!base) throw new Error("MFC account access is not configured yet. Please contact MFC.");
-  return /\/api\/v1$/i.test(base) ? base : `${base}/api/v1`;
-}
-
-async function readResponse(response: Response) {
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.message || data.error || "We couldn’t complete that request. Please try again.");
-  return data;
-}
+type AuthResponse = {
+  token?: string;
+  data?: { name?: string; email?: string; phone_no?: string };
+};
 
 export default function AdvocateAccessPage({ mode }: { mode: Mode }) {
   const isJoin = mode === "join";
@@ -55,15 +48,13 @@ export default function AdvocateAccessPage({ mode }: { mode: Mode }) {
 
     setBusy(true);
     try {
-      const base = apiV1Base();
-      const response = await fetch(`${base}/auth/${isJoin ? "register" : "login"}`, {
+      const data = await requestJson<AuthResponse>(mfcApiUrl(`/auth/${isJoin ? "register" : "login"}`), {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(isJoin
           ? { name: form.name.trim(), email: form.email.trim(), phone_no: phone, password: form.password, password_confirmation: form.passwordConfirmation }
           : { email: form.email.trim(), password: form.password }),
       });
-      const data = await readResponse(response);
       if (typeof data.token !== "string" || !data.token) throw new Error("MFC did not return an account session. Please contact support.");
       const account = data.data || {};
       sessionStorage.setItem("mfc_advocate_session", JSON.stringify({
@@ -72,7 +63,9 @@ export default function AdvocateAccessPage({ mode }: { mode: Mode }) {
         email: account.email || form.email.trim(),
         phone: account.phone_no || (isJoin ? phone : pendingDetails.phone || ""),
       }));
-      if (hasVerifiedPayment) {
+      if (!isJoin) {
+        navigate("/AffiliateExperience", { replace: true });
+      } else if (hasVerifiedPayment) {
         setCompleted(true);
       } else {
         const query = new URLSearchParams({ product: "promoter" });
@@ -86,11 +79,11 @@ export default function AdvocateAccessPage({ mode }: { mode: Mode }) {
     }
   };
 
-  if (!hasVerifiedPayment) return <Navigate to="/checkout?product=promoter" replace />;
+  if (isJoin && !hasVerifiedPayment) return <Navigate to="/checkout?product=promoter" replace />;
 
   if (completed) return <main className="advocate-access">
     <header className="access-header"><Link to="/landing" className="checkout-brand"><span className="checkout-mark">MFC</span><span><b>My Family Companion</b><small>HEALTH ADVOCATE PROGRAM</small></span></Link><span>STEP 2 OF 2 <i>·</i> ACCOUNT</span></header>
-    <section className="access-card access-complete"><span className="checkout-success-icon">✓</span><span className="checkout-eyebrow">ACCOUNT {isJoin ? "CREATED" : "SIGNED IN"}</span><h1>You’re almost ready, {form.name.split(" ")[0] || "advocate"}.</h1><p className="access-intro">Your ₦5,000 payment is confirmed and your MFC account is ready. MFC will finish setting up advocate access. Keep this payment reference if you need support.</p><div className="access-reference"><span>PAYMENT REFERENCE</span><b>{paymentReference}</b></div><Link className="checkout-submit" to="/landing">Return to MFC <span aria-hidden="true">→</span></Link></section>
+    <section className="access-card access-complete"><span className="checkout-success-icon">✓</span><span className="checkout-eyebrow">ACCOUNT {isJoin ? "CREATED" : "SIGNED IN"}</span><h1>You’re almost ready, {form.name.split(" ")[0] || "advocate"}.</h1><p className="access-intro">Your ₦5,000 payment is confirmed and your MFC account is ready. MFC will finish setting up advocate access. Keep this payment reference if you need support.</p><div className="access-reference"><span>PAYMENT REFERENCE</span><b>{paymentReference}</b></div><Link className="checkout-submit" to="/AffiliateExperience">Open promoter hub <span aria-hidden="true">→</span></Link></section>
     <footer className="access-footer">My Family Companion <span>·</span> Clear health knowledge for every family</footer>
   </main>;
 
@@ -100,7 +93,7 @@ export default function AdvocateAccessPage({ mode }: { mode: Mode }) {
       <Link to="/landing" className="access-back">← &nbsp;Back to MFC</Link>
       <span className="checkout-eyebrow">{isJoin ? "START YOUR ADVOCATE JOURNEY" : "WELCOME BACK"}</span>
       <h1>{isJoin ? "Create your MFC account." : "Sign in to continue."}</h1>
-      <p className="access-intro">{isJoin ? "Your ₦5,000 advocate registration is paid. Create your MFC account to continue setting up advocate access. The fee does not include the book." : "Your ₦5,000 advocate registration is paid. Sign in to the MFC account you want associated with your advocate access."}</p>
+      <p className="access-intro">{isJoin ? "Your ₦5,000 advocate registration is paid. Create your MFC account to continue setting up advocate access. The fee does not include the book." : "Sign in to your MFC account to open the promoter hub. Returning advocates do not need to pay the registration fee again."}</p>
       {sponsorCode && <p className="access-sponsor">Sponsor code captured: <b>{sponsorCode}</b></p>}
       <form className="access-form" onSubmit={submit}>
         {isJoin && <label>Full name<input required autoComplete="name" value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} placeholder="Your name" /></label>}
@@ -112,7 +105,7 @@ export default function AdvocateAccessPage({ mode }: { mode: Mode }) {
         <button className="checkout-submit" disabled={busy}>{busy ? "Connecting to MFC…" : isJoin ? "Create account & continue" : "Sign in & continue"}<span aria-hidden="true">→</span></button>
       </form>
       <p className="access-switch">{isJoin ? "Already have an MFC account?" : "New to MFC?"} <Link to={`${isJoin ? "/advocate/login" : "/advocate/join"}${sponsorCode ? `?ref=${encodeURIComponent(sponsorCode)}` : ""}`}>{isJoin ? "Sign in" : "Create an account"}</Link></p>
-      <p className="access-next">Payment reference: {paymentReference}. Your MFC account and book purchase are separate.</p>
+      {paymentReference && <p className="access-next">Payment reference: {paymentReference}. Your MFC account and book purchase are separate.</p>}
     </section>
     <footer className="access-footer">My Family Companion <span>·</span> Clear health knowledge for every family</footer>
   </main>;

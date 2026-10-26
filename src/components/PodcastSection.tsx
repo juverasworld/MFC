@@ -113,7 +113,7 @@
 //     setSelectedPodcast(podcast);
 //     setIsVideoPlayerOpen(true);
 //     setShowSubscribeButton(false);
-    
+
 //     // Show subscribe button after 1 minute (60 seconds)
 //     setTimeout(() => {
 //       setShowSubscribeButton(true);
@@ -163,23 +163,23 @@
 
 //     switch (status) {
 //       case 'ongoing':
-//         return { 
-//           ...baseStyle, 
-//           backgroundColor: '#fef2f2', 
+//         return {
+//           ...baseStyle,
+//           backgroundColor: '#fef2f2',
 //           color: '#b91c1c',
 //           borderColor: '#fecaca'
 //         };
 //       case 'upcoming':
-//         return { 
-//           ...baseStyle, 
-//           backgroundColor: '#eff6ff', 
+//         return {
+//           ...baseStyle,
+//           backgroundColor: '#eff6ff',
 //           color: '#1d4ed8',
 //           borderColor: '#dbeafe'
 //         };
 //       case 'past':
-//         return { 
-//           ...baseStyle, 
-//           backgroundColor: '#f9fafb', 
+//         return {
+//           ...baseStyle,
+//           backgroundColor: '#f9fafb',
 //           color: '#374151',
 //           borderColor: '#e5e7eb'
 //         };
@@ -554,7 +554,7 @@
 //                     <X style={{ width: '24px', height: '24px', color: '#6b7280' }} />
 //                   </button>
 //                 </div>
-                
+
 //                 {/* Tabs */}
 //                 <div style={overlayStyles.tabsContainer}>
 //                   {(['ongoing', 'upcoming', 'past'] as const).map((tab) => (
@@ -705,7 +705,7 @@
 //               >
 //                 <X style={{ width: '20px', height: '20px' }} />
 //               </button>
-              
+
 //               <iframe
 //                 ref={videoRef}
 //                 style={overlayStyles.videoIframe}
@@ -714,11 +714,11 @@
 //                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 //                 allowFullScreen
 //               />
-              
+
 //               <div style={overlayStyles.videoTitle}>
 //                 {selectedPodcast.title}
 //               </div>
-              
+
 //               <AnimatePresence>
 //                 {showSubscribeButton && (
 //                   <motion.button
@@ -726,7 +726,7 @@
 //                     initial={{ opacity: 0, y: 20 }}
 //                     animate={{ opacity: 1, y: 0 }}
 //                     exit={{ opacity: 0, y: 20 }}
-//                     whileHover={{ 
+//                     whileHover={{
 //                       scale: 1.05,
 //                       backgroundColor: '#cc0000'
 //                     }}
@@ -747,7 +747,7 @@
 // };
 
 // export default PodcastSection;
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
@@ -840,7 +840,7 @@ const PodcastSection: React.FC = () => {
     setSelectedPodcast(podcast);
     setIsVideoPlayerOpen(true);
     setShowSubscribeButton(false);
-    
+
     // Show subscribe button after 1 minute (60 seconds)
     setTimeout(() => {
       setShowSubscribeButton(true);

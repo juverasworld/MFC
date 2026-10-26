@@ -1,7 +1,4 @@
-const PRODUCTS = {
-  book: { directAmount: 3000000, referralAmount: 2500000 },
-  promoter: { amount: 500000 },
-};
+import { expectedPaymentAmountMinor, PAYMENT_CURRENCY, PAYMENT_PRODUCTS } from "../../shared/paymentCatalog.js";
 
 function send(res, status, payload) {
   return res.status(status).json(payload);
@@ -26,10 +23,10 @@ export default async function verifyPayment(req, res) {
 
     const metadata = transaction.metadata || {};
     const product = metadata.product;
-    const offer = PRODUCTS[product];
+    const offer = PAYMENT_PRODUCTS[product];
     const referralCode = typeof metadata.referral_code === "string" ? metadata.referral_code : "";
-    const expectedAmount = product === "book" ? (referralCode ? offer?.referralAmount : offer?.directAmount) : offer?.amount;
-    if ((product === "book" && referralCode && !/^[A-Za-z0-9_-]{2,80}$/.test(referralCode)) || !offer || transaction.reference !== reference || transaction.currency !== "NGN" || Number(transaction.amount) !== expectedAmount) {
+    const expectedAmount = expectedPaymentAmountMinor(product, Boolean(referralCode));
+    if ((product === "book" && referralCode && !/^[A-Za-z0-9_-]{2,80}$/.test(referralCode)) || !offer || transaction.reference !== reference || transaction.currency !== PAYMENT_CURRENCY || Number(transaction.amount) !== expectedAmount) {
       return send(res, 400, { error: "The payment details do not match an MFC order. Please contact MFC support." });
     }
 
@@ -63,7 +60,7 @@ export default async function verifyPayment(req, res) {
         countryCode: metadata.country_code,
         referralCode: metadata.referral_code || "",
         reference,
-        amount: offer.amount,
+        amount: offer.amountMinor / 100,
       };
     }
 

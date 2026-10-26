@@ -1,8 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
-import type { Plugin, ViteDevServer } from 'vite'
+import type { Connect, Plugin, ViteDevServer } from 'vite'
 import react from '@vitejs/plugin-react'
-
-// import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 
 // @ts-expect-error Vercel handlers are plain JavaScript modules.
@@ -18,8 +16,33 @@ const serverOnlyEnv = [
   'MFC_FULFILLMENT_TOKEN',
 ]
 
+type PaymentRequest = Connect.IncomingMessage & {
+  body?: Record<string, unknown>
+}
+
+type PaymentResponse = {
+  status(code: number): PaymentResponse
+  json(payload: unknown): PaymentResponse
+}
+
+type PaymentHandler = (req: PaymentRequest, res: PaymentResponse) => Promise<unknown>
+type LocalResponse = {
+  statusCode: number
+  writableEnded: boolean
+  setHeader(name: string, value: string): void
+  end(body?: string): void
+}
+
+const maximumRequestCharacters = 64 * 1024
+
+function sendJson(res: LocalResponse, statusCode: number, payload: unknown) {
+  res.statusCode = statusCode
+  res.setHeader('Content-Type', 'application/json; charset=utf-8')
+  res.end(JSON.stringify(payload))
+}
+
 function localPaymentApi(): Plugin {
-  const handlers = new Map<string, (req: any, res: any) => Promise<unknown>>([
+  const handlers = new Map<string, PaymentHandler>([
     ['/api/payments/initialize', initializePayment],
     ['/api/payments/verify', verifyPayment],
   ])
@@ -28,54 +51,65 @@ function localPaymentApi(): Plugin {
     name: 'mfc-local-payment-api',
     apply: 'serve',
     configureServer(server: ViteDevServer) {
-      server.middlewares.use(async (req: any, res: any, next: (error?: Error) => void) => {
+      server.middlewares.use((incomingReq, res, next) => {
+        const req = incomingReq as PaymentRequest
         const pathname = new URL(req.url || '/', 'http://localhost').pathname
         const handler = handlers.get(pathname)
         if (!handler) return next()
         if (req.method !== 'POST') {
-          res.statusCode = 405
-          res.setHeader('Content-Type', 'application/json')
-          return res.end(JSON.stringify({ error: 'Method not allowed.' }))
+          return sendJson(res, 405, { error: 'Method not allowed.' })
         }
 
-        try {
-          let rawBody = ''
-          for await (const chunk of req) rawBody += chunk
-          req.body = rawBody ? JSON.parse(rawBody) : {}
-        } catch {
-          res.statusCode = 400
-          res.setHeader('Content-Type', 'application/json')
-          return res.end(JSON.stringify({ error: 'Request body must be valid JSON.' }))
-        }
-
-        if (!process.env.APP_BASE_URL && req.headers.host) {
-          const protocol = req.headers['x-forwarded-proto'] || 'http'
-          process.env.APP_BASE_URL = `${protocol}://${req.headers.host}`
-        }
-
-        const response = {
-          status(code: number) {
-            res.statusCode = code
-            return this
-          },
-          json(payload: unknown) {
-            res.setHeader('Content-Type', 'application/json')
-            res.end(JSON.stringify(payload))
-            return this
-          },
-        }
-
-        try {
-          await handler(req, response)
-        } catch {
-          if (!res.writableEnded) {
-            res.statusCode = 500
-            res.setHeader('Content-Type', 'application/json')
-            res.end(JSON.stringify({ error: 'Local payment API failed. Please try again.' }))
-          }
-        }
+        void handleLocalPaymentRequest(req, res, handler)
       })
     },
+  }
+}
+
+async function handleLocalPaymentRequest(
+  req: PaymentRequest,
+  res: LocalResponse,
+  handler: PaymentHandler,
+) {
+  let body: unknown
+  try {
+    let rawBody = ''
+    for await (const chunk of req) {
+      rawBody += chunk
+      if (rawBody.length > maximumRequestCharacters) {
+        sendJson(res, 413, { error: 'Request body is too large.' })
+        return
+      }
+    }
+
+    body = rawBody ? JSON.parse(rawBody) : {}
+  } catch {
+    sendJson(res, 400, { error: 'Request body must be valid JSON.' })
+    return
+  }
+
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    sendJson(res, 400, { error: 'Request body must be a JSON object.' })
+    return
+  }
+  req.body = body as Record<string, unknown>
+
+  const response: PaymentResponse = {
+    status(code) {
+      res.statusCode = code
+      return response
+    },
+    json(payload) {
+      if (!res.writableEnded) sendJson(res, res.statusCode || 200, payload)
+      return response
+    },
+  }
+
+  try {
+    await handler(req, response)
+    if (!res.writableEnded) sendJson(res, 500, { error: 'Local payment API did not return a response.' })
+  } catch {
+    if (!res.writableEnded) sendJson(res, 500, { error: 'Local payment API failed. Please try again.' })
   }
 }
 
@@ -90,22 +124,3 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss(), localPaymentApi()],
   }
 })
-// export default defineConfig({
-// })
-// import { defineConfig } from "vite";
-// import react from "@vitejs/plugin-react";
-// import tailwindcss from "@tailwindcss/vite";
-
-// // https://vite.dev/config/
-// export default defineConfig({
-//   plugins: [react(), tailwindcss()],
-//   server: {
-//     proxy: {
-//       "/api": {
-//         target: "https://apime.myfamilycompanion.org",
-//         changeOrigin: true,
-//         rewrite: (path) => path.replace(/^\/api/, "/api/v1"),
-//       },
-//     },
-//   },
-// });
