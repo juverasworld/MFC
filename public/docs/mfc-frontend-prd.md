@@ -1,7 +1,7 @@
 # MFC Book Sales & Affiliate Frontend PRD
 
 **Status:** Frontend product requirements  
-**Version:** 2.1  
+**Version:** 2.2
 **Scope:** Customer book sales and Family Health Promoter registration/workspace
 
 ## 1. Summary
@@ -62,6 +62,7 @@ Needs to review promoter registration/attribution exceptions, reconcile eligible
 
 ### Public MFC surface
 
+- MFC mission/story landing page
 - Book storefront
 - Book details / chapters / FAQs
 - Checkout handoff and order confirmation
@@ -121,6 +122,14 @@ Needs to review promoter registration/attribution exceptions, reconcile eligible
 3. Admin reviews the weekly run, sees flags/adjustments/refunds, and explicitly approves before payout.
 4. Promoter sees approval and payout progress, with clear support route for a discrepancy.
 
+### E. Compact public landing and checkout
+
+1. `/landing` tells the MFC purpose in a short editorial story, presents the book and advocate offers with their prices near the top, and links each action to its own checkout selection.
+2. `/checkout?product=book` presents the ₦30,000 book order; `/checkout?product=promoter` presents the separate ₦5,000 advocate registration. Each form collects only information needed to complete that order or registration.
+3. The MFC server initializes the Paystack transaction with a server-controlled amount and sends the browser to Paystack's authorization URL. The Paystack secret key is never exposed to the browser.
+4. Paystack returns the customer to a pending state. MFC verifies transaction status, amount, currency, reference, and product server-side before submitting the idempotent book order or activating advocate registration.
+5. If payment initialization or fulfillment is not configured, checkout fails closed with a clear support message. A payment return alone is never treated as a successful order.
+
 ## 8. Functional requirements
 
 ### P0: Customer storefront and promoter entry
@@ -133,6 +142,9 @@ Needs to review promoter registration/attribution exceptions, reconcile eligible
 | S-04 | Promoter program explainer | Clearly separates ₦5,000 program registration from both book prices and states what the registration fee provides. |
 | S-05 | Commission explanation | Shows four-level rates and one-sale Naira examples: 20%/₦5,000, 10%/₦2,500, 5%/₦1,250, 5%/₦1,250 on a ₦25,000 qualifying sale; explains totals are conditional on eligible sales and program terms. |
 | S-06 | Referral-aware storefront | Valid referral visits show the ₦25,000 promoter price instead of the ₦30,000 standard price. Referral ID/link is preserved and passed to attribution/payment integration without exposing sensitive data or interrupting checkout. |
+| S-07 | Mission landing page | `/landing` introduces MFC's family-health mission, founder story, life-stage coverage, book, and roadmap. It uses only approved claims, separates vision goals from measured results, and offers clear book and promoter paths. |
+| S-08 | Short landing page | Keeps the public story focused on the purpose, Dr. OVO's attributed origin story, six life stages, and the two priced actions without repeating sections or calls to action. |
+| S-09 | Promoter checkout | Collects registration details and an optional referral/sponsor code; shows ₦5,000 as separate from the book; activates the advocate only after verified payment and successful MFC registration. |
 
 ### P0: Promoter portal
 
@@ -195,6 +207,8 @@ The frontend displays authoritative commission records from the affiliate/commis
 
 Confirm exact service capabilities, webhooks, fee/payout mechanics, and source-of-truth boundaries before implementation. The storefront should not expose internal provider redirects as the primary brand experience where an API/embedded or well-branded handoff is available.
 
+For the new Paystack handoff, configure `PAYSTACK_SECRET_KEY`, `APP_BASE_URL`, `MFC_API_BASE_URL` for book order creation, `MFC_PROMOTER_REGISTRATION_URL` for advocate activation, and `MFC_FULFILLMENT_TOKEN` for server-to-server requests in the serverless host. Never use a `VITE_` prefix for a secret. Fulfillment endpoints must accept the Paystack reference as an idempotency key so a verification retry cannot create duplicate orders or advocate registrations. Confirm the advocate endpoint and activation contract before enabling the ₦5,000 payment path.
+
 - Confirm how long promoter referral attribution is retained, what happens when a referral is invalid/expired, and which provider validates the referrer before applying the ₦25,000 price.
 - Define leaderboard qualification, period boundaries, ties, eligibility, privacy/display names, and treatment of refunds/cancelled sales before publishing rankings.
 - Confirm whether network count means unique active promoters, all registered promoters, or another platform-defined measure; label the chosen metric precisely.
@@ -203,6 +217,7 @@ Confirm exact service capabilities, webhooks, fee/payout mechanics, and source-o
 
 - Follow [MFC Book Sales & Promoter Hub Design Guide](mfc-frontend-design-guide.md).
 - Preserve the existing MFC navy/green/orange identity and editorial storytelling while making the promoter workspace scannable and financially transparent.
+- The MFC landing page uses a clinician-led editorial narrative: why the work exists, the family health journey, the book as a practical resource, and the broader MFC vision. Health claims require approved sources; vision targets are labeled as aspirations.
 - Use separate public customer and signed-in promoter experiences; clearly label the transition to the Promoter Hub.
 - Show Naira values with commission percentages and statuses in text, not color alone.
 - No health promises, income guarantees, deceptive urgency, or misleading “earnings” screenshots.

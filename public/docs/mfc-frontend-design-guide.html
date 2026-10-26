@@ -7,7 +7,7 @@
 <p>The MFC site remains the branded, customer-facing home for the book and promoter program. It should make the value of the book easy to understand, make purchase and promoter registration distinct, and give active promoters a practical workspace for sharing the book and following sales. The product should feel like MFC&#x27;s warm, credible health-education brand, not a generic affiliate SaaS dashboard.</p>
 <p>Use the MFC story-led voice and visual identity while making money and referral mechanics unusually clear. Do not promise health outcomes or promoter income. Keep the customer purchase journey and promoter workspace visibly separate.</p>
 <h2 id='existing-mfc-identity'>Existing MFC identity</h2>
-<p>The current MFC frontend establishes a midnight/navy foundation, green health cues, warm orange accents, Montserrat display typography, rounded surfaces, and founder-led storytelling. Carry those recognizable choices into the sales and promoter experience. Use a calmer, more consistent application shell than the legacy marketing site, with less motion and more whitespace.</p>
+<p>The current MFC dashboard establishes a soft green canvas, forest-green surfaces, green actions, and restrained warm accents. Carry those recognizable choices into the customer experience, with founder-led storytelling and compact, purposeful layouts.</p>
 <h3 id='color-tokens'>Color tokens</h3>
 <div class='table-wrap'><table><thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead><tbody>
 <tr><td><code>mfc-ink</code></td><td><code>#1F2D3D</code></td><td>Brand, headings, navigation</td></tr>
@@ -26,7 +26,7 @@
 <p>Green identifies MFC actions and verified positive states. Orange is a restrained accent. Do not use green to imply that earnings are guaranteed. Show commission rates and amounts in plain text, independent of color. Keep the storefront book photography/illustration warm and editorial; keep the promoter workspace light, structured, and data-readable.</p>
 <h3 id='type-and-layout'>Type and layout</h3>
 <ul>
-<li>Use Montserrat for concise brand/display moments to echo the current site. Use a legible sans-serif such as DM Sans or a system stack for application UI, tables, and longer explanations.</li>
+<li>Use <strong>Bricolage Grotesque</strong> for headings and display text. Use <strong>Poppins</strong> for body copy, labels, navigation, and forms. Keep body copy comfortable to read and avoid reducing paragraph text to dashboard-sized metadata.</li>
 <li>Body text: 14–16px on desktop and at least 14px on mobile; metadata should remain readable at 12px or larger for key financial details.</li>
 <li>Use a 4px spacing base, with 8/12/16/24/32px as the main rhythm. Cards use 10–14px corner radii and subtle borders before shadows.</li>
 <li>Keep promoter dashboard content within a 1160px maximum width. Use a persistent sidebar on desktop and a slide-in navigation on mobile.</li>
@@ -36,6 +36,7 @@
 <h2 id='information-architecture'>Information architecture</h2>
 <h3 id='customer-facing-mfc-website'>Customer-facing MFC website</h3>
 <ul>
+<li>Mission landing page introducing the story, family-health journey, book, current community work, and long-term vision</li>
 <li>Book landing page / product information</li>
 <li>Book purchase and secure payment handoff</li>
 <li>Confirmation and digital-delivery guidance</li>
@@ -54,6 +55,24 @@
 </ul>
 <p>Keep the promoter portal under MFC branding. GoAffPro may power affiliate operations, but should not become the whole MFC website or replace the branded customer storefront.</p>
 <h2 id='core-screen-guidance'>Core screen guidance</h2>
+<h3 id='mfc-mission-landing-page'>MFC mission landing page</h3>
+<ul>
+<li>Keep the public <code>/landing</code> page concise: one editorial hero, two clear offer choices, one founder story, a compact six-stage book journey, and a final action. Avoid stacking generic feature cards or repeating the same CTA after every section.</li>
+<li>Open with a clear family-health purpose and show both next steps near the top: buy the book for <strong>₦30,000</strong>, or register as an MFC Health Advocate for <strong>₦5,000</strong>. Keep the prices and separate purchases explicit.</li>
+<li>Tell Dr. OVO&#x27;s story with care and attribution. Use “I survived. My sister didn’t.” as a brief, attributed quote, then connect the story to making useful health knowledge easier for families to reach.</li>
+<li>Use the six-stage book outline—before pregnancy, pregnancy, birth and early weeks, baby and child, postpartum, and partner support—as a compact progression. Do not claim it replaces clinical care.</li>
+<li>Present current offerings and future roadmap items with distinct availability labels. Mark the one-million-families-per-year figure as an MFC vision target, not a measured outcome.</li>
+<li>Keep the established MFC dashboard canvas (<code>#F8FAF8</code>), forest-green editorial surfaces (<code>#193B32</code>), green actions, and restrained warm accent. Use supplied author/book imagery and asymmetrical editorial composition rather than repeating generic service cards.</li>
+<li>Give direct paths to explore the book and promoter program, and include a clear educational-information disclaimer near relevant health content.</li>
+</ul>
+<h3 id='checkout-and-payment-return'>Checkout and payment return</h3>
+<ul>
+<li>Use one short MFC-branded checkout at <code>/checkout?product=book</code> or <code>/checkout?product=promoter</code>; each path has a clear title, exact total, short form, and separate purchase explanation.</li>
+<li>Book checkout collects name, email, phone, and delivery city. Advocate checkout collects name, email, phone, and an optional referral/sponsor code. Keep registration distinct from book purchase.</li>
+<li>Send the customer to Paystack&#x27;s hosted authorization URL after the MFC server initializes the transaction. The browser must never contain the Paystack secret key or set a payment amount.</li>
+<li>On return, show a pending verification state. Only show success after the server verifies the transaction amount, currency, status, and product with Paystack and the MFC order/registration service confirms fulfillment.</li>
+<li>If payment infrastructure or fulfillment is not configured, explain the issue and do not charge. Show recoverable errors and preserve the entered form values.</li>
+</ul>
 <h3 id='book-storefront'>Book storefront</h3>
 <ul>
 <li>Explain the book&#x27;s audience and scope: 21 chapters across the family journey, from pre-conception through pregnancy, birth, infant care, postpartum recovery, and partner support.</li>
