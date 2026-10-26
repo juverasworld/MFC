@@ -1,85 +1,38 @@
-/* Header.css */
-
-/* Mobile menu styles */
-.mobile-menu {
-  display: none;
-  /* Hidden by default */
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  /* Position below the header */
-  left: 0;
-  right: 0;
-  background: #fff;
-  /* Adjust to match your design */
-  padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transform: translateY(-100%);
-  /* Start off-screen */
-  opacity: 0;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  /* Smooth transition */
-  z-index: 1000;
+.route-loading,
+.not-found-page {
+  min-height: 70vh;
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  padding: 32px 24px;
+  color: #1f332b;
+  text-align: center;
 }
 
-/* Active state for mobile menu */
-.mobile-menu.active {
-  display: flex;
-  /* Show when active */
-  transform: translateY(0);
-  /* Slide in */
-  opacity: 1;
+.route-loading {
+  color: #68786d;
+  font: 500 14px "Poppins", sans-serif;
 }
 
-/* Mobile menu links */
-.mobile-menu a {
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  color: #333;
-  /* Adjust to match your design */
-  font-size: 1.1rem;
+.not-found-page > p {
+  margin: 0;
+  color: #a1784b;
+  font: 700 10px "Poppins", sans-serif;
+  letter-spacing: 0.12em;
 }
 
-/* Hamburger icon styles */
-.hamburger {
-  display: none;
-  /* Hidden on desktop */
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 25px;
-  background: transparent;
-  border: none;
+.not-found-page h1 {
+  margin: 0;
+  font: 700 clamp(30px, 5vw, 44px)/1.1 "Bricolage Grotesque", sans-serif;
+}
+
+.not-found-page a {
+  color: #267350;
+  font: 600 13px "Poppins", sans-serif;
+}
+
+#back-to-top {
+  border: 0;
   cursor: pointer;
-  padding: 0;
-  z-index: 1001;
-}
-
-.hamburger span {
-  width: 100%;
-  height: 3px;
-  background: #333;
-  /* Adjust to match your design */
-  transition: all 0.3s ease-in-out;
-}
-
-/* Close icon animation */
-.close-icon {
-  font-size: 1.5rem;
-  color: #333;
-  /* Adjust to match your design */
-  transition: opacity 0.3s ease-in-out;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .nav-menu {
-    display: none;
-    /* Hide desktop menu on mobile */
-  }
-
-  .hamburger {
-    display: flex;
-    /* Show hamburger on mobile */
-  }
+  font: inherit;
 }

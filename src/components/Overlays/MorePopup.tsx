@@ -1,5 +1,5 @@
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -98,7 +98,7 @@ const MorePopup: React.FC<MorePopupProps> = ({ isOpen, closePopup }) => {
               love is most powerful when it is informed, and every home deserves
               a companion like this.
             </p>
-          
+
             <motion.button
               className="popup-close-btn"
               whileHover={{ scale: 1.1 }}

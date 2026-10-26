@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePaystack } from "../../hooks/usePaystack";
@@ -192,7 +192,7 @@ const handleInputChange = (
         reference,
         org_name: donation.organization,
       };
- 
+
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders/donate`,
         {
           method: "POST",
@@ -399,7 +399,7 @@ const handleInputChange = (
                   >
                     <div className="current-price">
                       ₦{donation.totalNGN.toLocaleString("en-NG")} / $
-                      {donation.totalUSD.toLocaleString("en-US")} 
+                      {donation.totalUSD.toLocaleString("en-US")}
                     </div>
                   </motion.div>
                   <motion.button

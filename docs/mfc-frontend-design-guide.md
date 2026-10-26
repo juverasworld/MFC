@@ -12,7 +12,7 @@ Use the MFC story-led voice and visual identity while making money and referral 
 
 ## Existing MFC identity
 
-The current MFC frontend establishes a midnight/navy foundation, green health cues, warm orange accents, Montserrat display typography, rounded surfaces, and founder-led storytelling. Carry those recognizable choices into the sales and promoter experience. Use a calmer, more consistent application shell than the legacy marketing site, with less motion and more whitespace.
+The current MFC dashboard establishes a soft green canvas, forest-green surfaces, green actions, and restrained warm accents. Carry those recognizable choices into the customer experience, with founder-led storytelling and compact, purposeful layouts.
 
 ### Color tokens
 
@@ -35,7 +35,7 @@ Green identifies MFC actions and verified positive states. Orange is a restraine
 
 ### Type and layout
 
-- Use Montserrat for concise brand/display moments to echo the current site. Use a legible sans-serif such as DM Sans or a system stack for application UI, tables, and longer explanations.
+- Use **Bricolage Grotesque** for headings and display text. Use **Poppins** for body copy, labels, navigation, and forms. Keep body copy comfortable to read and avoid reducing paragraph text to dashboard-sized metadata.
 - Body text: 14–16px on desktop and at least 14px on mobile; metadata should remain readable at 12px or larger for key financial details.
 - Use a 4px spacing base, with 8/12/16/24/32px as the main rhythm. Cards use 10–14px corner radii and subtle borders before shadows.
 - Keep promoter dashboard content within a 1160px maximum width. Use a persistent sidebar on desktop and a slide-in navigation on mobile.
@@ -46,6 +46,7 @@ Green identifies MFC actions and verified positive states. Orange is a restraine
 
 ### Customer-facing MFC website
 
+- Mission landing page introducing the story, family-health journey, book, current community work, and long-term vision
 - Book landing page / product information
 - Book purchase and secure payment handoff
 - Confirmation and digital-delivery guidance
@@ -66,10 +67,32 @@ Keep the promoter portal under MFC branding. GoAffPro may power affiliate operat
 
 ## Core screen guidance
 
+### MFC mission landing page
+
+- Keep the public `/landing` page concise: one editorial hero, two clear offer choices, one founder story, a compact six-stage book journey, and a final action. Avoid stacking generic feature cards or repeating the same CTA after every section.
+- Open with a clear family-health purpose and show both next steps near the top: buy the book for **₦30,000**, or register as an MFC Health Advocate for **₦5,000**. Keep the prices and separate purchases explicit.
+- Tell Dr. OVO's story with care and attribution. Use “I survived. My sister didn’t.” as a brief, attributed quote, then connect the story to making useful health knowledge easier for families to reach.
+- Include a concise testimonial section using approved, attributed reader or expert comments from the MFC source materials. Keep quotations exact, name the speaker and role, and do not add star ratings unless they are documented.
+- If testimonials use a moving marquee, provide an obvious pause/resume control, pause while hovered or focused, and honor `prefers-reduced-motion` with a manually scrollable static row.
+- Use the six-stage book outline—before pregnancy, pregnancy, birth and early weeks, baby and child, postpartum, and partner support—as a compact progression. Do not claim it replaces clinical care.
+- Present current offerings and future roadmap items with distinct availability labels. Mark the one-million-families-per-year figure as an MFC vision target, not a measured outcome.
+- Keep the established MFC dashboard canvas (`#F8FAF8`), forest-green editorial surfaces (`#193B32`), green actions, and restrained warm accent. Use supplied author/book imagery and asymmetrical editorial composition rather than repeating generic service cards.
+- Give direct paths to explore the book and promoter program, and include a clear educational-information disclaimer near relevant health content.
+
+### Checkout and payment return
+
+- Use one short MFC-branded checkout at `/checkout?product=book` or `/checkout?product=promoter`; each path has a clear title, exact total, short form, and separate purchase explanation.
+- Book checkout collects name, email, phone, and delivery city. Advocate checkout collects name, email, phone, and an optional referral/sponsor code. Keep registration distinct from book purchase.
+- Phone fields use a searchable or native country selector with flag, country name, and calling code; submit the normalized international number and selected country metadata.
+- Send the customer to Paystack's hosted authorization URL after the MFC server initializes the transaction. The browser must never contain the Paystack secret key or set a payment amount.
+- On return, show a pending verification state. Only show success after the server verifies the transaction amount, currency, status, and product with Paystack and the MFC order/registration service confirms fulfillment.
+- If payment infrastructure or fulfillment is not configured, explain the issue and do not charge. Show recoverable errors and preserve the entered form values.
+
 ### Book storefront
 
 - Explain the book's audience and scope: 21 chapters across the family journey, from pre-conception through pregnancy, birth, infant care, postpartum recovery, and partner support.
 - Show the standard digital edition price clearly: **₦30,000**. When a customer follows a promoter referral, show the **₦25,000 promoter price** and preserve that attribution through checkout.
+- Referral links should land on the public `/landing` story and preserve the promoter code through payment return and fulfillment. Validate the code with the affiliate system before applying the discount.
 - State what is included and how digital delivery works before checkout.
 - Show whether the displayed amount is the standard price or promoter-link price; never hide a discount or change the price unexpectedly at checkout.
 - Offer a secondary, separate path for visitors interested in becoming a Family Health Promoter.
@@ -77,6 +100,8 @@ Keep the promoter portal under MFC branding. GoAffPro may power affiliate operat
 
 ### Promoter registration
 
+- Start with the program explanation and ₦5,000 payment at `/checkout?product=promoter`. After verified payment, offer `/advocate/join` and `/advocate/login`; make clear that payment and MFC account access are sequential steps.
+- Preserve the verified payment reference, payment email, and sponsor/referral context through account access. Provide error, retry, and activation-pending states; payment or account creation alone must not imply active advocate status.
 - Show the one-time **₦5,000** fee as promoter-program registration. State clearly that it is for program access/status and does not purchase the book.
 - Explain the promoter receives official status, a unique promoter ID, a personal referral link, promoter training, sales/commission dashboard, product FAQs, and approved marketing materials.
 - Explain the commission model and attribution in a short, expandable breakdown before registration/payment.

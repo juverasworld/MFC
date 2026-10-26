@@ -547,7 +547,7 @@
 // };
 
 // export default PresaleOverlay;
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePaystack } from "../../hooks/usePaystack";
@@ -607,7 +607,7 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
   // Countdown effect for Amazon redirect
   useEffect(() => {
     let intervalId: ReturnType<typeof setInterval>;
-    
+
     if (showCountdown && countdown > 0) {
       intervalId = setInterval(() => {
         setCountdown((prev) => prev - 1);
@@ -816,7 +816,7 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
       return (
         <div className="amazon-redirect-container">
           <p className="confirmation-message">{confirmationMessage}</p>
-          
+
           <div className="redirect-options">
             <motion.button
               className="amazon-redirect-btn"
@@ -827,12 +827,12 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
             >
               Click here to go to Amazon now
             </motion.button>
-            
+
             <div className="countdown-container">
               <p className="countdown-text">
                 Or you will be automatically redirected in:
               </p>
-              <motion.div 
+              <motion.div
                 className="countdown-number"
                 key={countdown}
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -847,7 +847,7 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
         </div>
       );
     }
-    
+
     return (
       <p className={`confirmation-message ${error ? "error" : ""}`}>
         {confirmationMessage}
@@ -1127,9 +1127,9 @@ const PresaleOverlay: React.FC<PresaleOverlayProps> = ({ isOpen, closeOverlays }
                 <h2 id="presale-overlay-title" className="overlay-title">
                   {error ? "Order Error" : "Thank You!"}
                 </h2>
-                
+
                 {renderAmazonRedirectContent()}
-                
+
                 {/* Only show close button for local orders or error states */}
                 {(presaleType === "local" || error || !showCountdown) && (
                   <motion.button

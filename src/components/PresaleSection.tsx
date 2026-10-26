@@ -41,7 +41,7 @@
 // //       const response = await fetch(
 // //         `${import.meta.env.VITE_API_BASE_URL}/subscribe-newsletter`,
 
-       
+
 // //         {
 // //           method: "POST",
 // //           headers: {
@@ -112,7 +112,7 @@
 // //         {/* Presale Section */}
 // //         <motion.div
 // //           className="presale-section"
-          
+
 // //           initial="hidden"
 // //           whileInView="visible"
 // //           viewport={{ once: false, amount: 0.2 }}
@@ -977,7 +977,7 @@
 // };
 
 // export default PresaleSection;
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import presaleImage from "../assets/WhatsApp Image 2025-07-09 at 08.47.50_9462555c.jpg";
