@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 
 const PRODUCTS = {
-  book: { amount: 3000000 },
+  book: { directAmount: 3000000, referralAmount: 2500000 },
   promoter: { amount: 500000 },
 };
 
@@ -14,11 +14,7 @@ export default async function initializePayment(req, res) {
   if (!process.env.PAYSTACK_SECRET_KEY || !process.env.APP_BASE_URL) {
     return send(res, 503, { error: "Secure checkout is not configured yet. Please contact MFC to complete your purchase." });
   }
-  if (!process.env.MFC_FULFILLMENT_TOKEN) {
-    return send(res, 503, { error: "Secure checkout is not configured yet. Please contact MFC to complete your purchase." });
-  }
-
-  const { product, name, email, phone, city, referralCode } = req.body || {};
+  const { product, name, email, phone, city, referralCode, country, countryCode } = req.body || {};
   const offer = PRODUCTS[product];
   if (!offer) return send(res, 400, { error: "Choose a valid MFC product." });
   if (typeof name !== "string" || !name.trim() || typeof email !== "string" || !email.includes("@") || typeof phone !== "string" || !phone.trim()) {
@@ -27,20 +23,23 @@ export default async function initializePayment(req, res) {
   if (product === "book" && (typeof city !== "string" || !city.trim())) {
     return send(res, 400, { error: "Enter your city for delivery." });
   }
-  if (product === "book" && !process.env.MFC_API_BASE_URL) {
+  if (product === "book" && (!process.env.MFC_API_BASE_URL || !process.env.MFC_FULFILLMENT_TOKEN)) {
     return send(res, 503, { error: "Book order fulfillment is not configured yet. Please contact MFC before paying." });
   }
-  if (product === "promoter" && !process.env.MFC_PROMOTER_REGISTRATION_URL) {
-    return send(res, 503, { error: "Advocate registration is not configured yet. Please contact MFC before paying." });
+  if (product === "book" && referralCode && (typeof referralCode !== "string" || !/^[A-Za-z0-9_-]{2,80}$/.test(referralCode))) {
+    return send(res, 400, { error: "This advocate referral code is not valid." });
   }
 
   const baseUrl = process.env.APP_BASE_URL.replace(/\/$/, "");
   const reference = `MFC-${Date.now()}-${randomUUID().replaceAll("-", "").slice(0, 10)}`;
+  const amount = product === "book" ? (referralCode ? offer.referralAmount : offer.directAmount) : offer.amount;
   const metadata = {
     product,
     customer_name: name.trim(),
     phone: phone.trim(),
-    ...(product === "book" ? { city: city.trim(), no_of_copies: 1 } : {}),
+    country: typeof country === "string" ? country : "",
+    country_code: typeof countryCode === "string" ? countryCode : "",
+    ...(product === "book" ? { city: city.trim(), no_of_copies: 1, ...(referralCode ? { referral_code: referralCode.trim() } : {}) } : {}),
     ...(product === "promoter" && typeof referralCode === "string" && referralCode.trim() ? { referral_code: referralCode.trim() } : {}),
   };
 
@@ -49,8 +48,8 @@ export default async function initializePayment(req, res) {
       method: "POST",
       headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: email.trim(), amount: offer.amount, currency: "NGN", reference,
-        callback_url: `${baseUrl}/checkout?product=${product}`,
+        email: email.trim(), amount, currency: "NGN", reference,
+        callback_url: `${baseUrl}/checkout?product=${product}${referralCode ? `&ref=${encodeURIComponent(referralCode)}` : ""}`,
         metadata,
       }),
     });

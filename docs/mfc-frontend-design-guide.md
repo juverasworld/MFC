@@ -83,6 +83,7 @@ Keep the promoter portal under MFC branding. GoAffPro may power affiliate operat
 
 - Use one short MFC-branded checkout at `/checkout?product=book` or `/checkout?product=promoter`; each path has a clear title, exact total, short form, and separate purchase explanation.
 - Book checkout collects name, email, phone, and delivery city. Advocate checkout collects name, email, phone, and an optional referral/sponsor code. Keep registration distinct from book purchase.
+- Phone fields use a searchable or native country selector with flag, country name, and calling code; submit the normalized international number and selected country metadata.
 - Send the customer to Paystack's hosted authorization URL after the MFC server initializes the transaction. The browser must never contain the Paystack secret key or set a payment amount.
 - On return, show a pending verification state. Only show success after the server verifies the transaction amount, currency, status, and product with Paystack and the MFC order/registration service confirms fulfillment.
 - If payment infrastructure or fulfillment is not configured, explain the issue and do not charge. Show recoverable errors and preserve the entered form values.
@@ -91,6 +92,7 @@ Keep the promoter portal under MFC branding. GoAffPro may power affiliate operat
 
 - Explain the book's audience and scope: 21 chapters across the family journey, from pre-conception through pregnancy, birth, infant care, postpartum recovery, and partner support.
 - Show the standard digital edition price clearly: **₦30,000**. When a customer follows a promoter referral, show the **₦25,000 promoter price** and preserve that attribution through checkout.
+- Referral links should land on the public `/landing` story and preserve the promoter code through payment return and fulfillment. Validate the code with the affiliate system before applying the discount.
 - State what is included and how digital delivery works before checkout.
 - Show whether the displayed amount is the standard price or promoter-link price; never hide a discount or change the price unexpectedly at checkout.
 - Offer a secondary, separate path for visitors interested in becoming a Family Health Promoter.
@@ -98,6 +100,8 @@ Keep the promoter portal under MFC branding. GoAffPro may power affiliate operat
 
 ### Promoter registration
 
+- Start with the program explanation and ₦5,000 payment at `/checkout?product=promoter`. After verified payment, offer `/advocate/join` and `/advocate/login`; make clear that payment and MFC account access are sequential steps.
+- Preserve the verified payment reference, payment email, and sponsor/referral context through account access. Provide error, retry, and activation-pending states; payment or account creation alone must not imply active advocate status.
 - Show the one-time **₦5,000** fee as promoter-program registration. State clearly that it is for program access/status and does not purchase the book.
 - Explain the promoter receives official status, a unique promoter ID, a personal referral link, promoter training, sales/commission dashboard, product FAQs, and approved marketing materials.
 - Explain the commission model and attribution in a short, expandable breakdown before registration/payment.

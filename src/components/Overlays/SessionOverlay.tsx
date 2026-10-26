@@ -300,22 +300,18 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
         formData.location === "Nigeria" ? "NGN" : "USD"
       );
 
-      const payload = {
-        name: formData.name,
-        email: formData.email,
-        country: formData.location,
-        reference: (transaction as any).reference,
-      };
+      const payload = new FormData();
+      payload.set("name", formData.name);
+      payload.set("email", formData.email);
+      payload.set("country", formData.location);
+      payload.set("reference", String((transaction as any).reference || ""));
 
-      // Make API call
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/book-paid-session`
-        
-        , {
+      const apiBase = String(import.meta.env.VITE_API_BASE_URL || "").replace(/\/+$/, "");
+      if (!apiBase) throw new Error("Session booking is not configured. Please contact MFC.");
+      const versionedBase = /\/api\/v1$/i.test(apiBase) ? apiBase : `${apiBase}/api/v1`;
+      const response = await fetch(`${versionedBase}/book-paid-session`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        body: payload,
       });
 
       const result = await response.json();

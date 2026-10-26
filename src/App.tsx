@@ -7,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
@@ -26,11 +26,19 @@ import BookSales from "./pages/BookSales"
 import AffiliateExperience from "./pages/AffiliateExperience"
 import LandingPage from "./pages/LandingPage"
 import CheckoutPage from "./pages/CheckoutPage"
+import AdvocateAccessPage from "./pages/AdvocateAccessPage"
+
+function CompanionRoute() {
+  const location = useLocation();
+  const referral = new URLSearchParams(location.search).get("ref");
+  if (referral) return <Navigate replace to={`/landing?ref=${encodeURIComponent(referral)}`} />;
+  return <AffiliateExperience />;
+}
 
 function AppContent() {
   const location = useLocation();
   const isBookPage = location.pathname === "/book";
-  const isCompanionPage = location.pathname.startsWith("/companion") || location.pathname.toLowerCase() === "/affiliateexperience" || location.pathname.toLowerCase() === "/landing" || location.pathname.toLowerCase() === "/checkout";
+  const isCompanionPage = location.pathname.startsWith("/companion") || location.pathname.startsWith("/advocate/") || location.pathname.toLowerCase() === "/affiliateexperience" || location.pathname.toLowerCase() === "/landing" || location.pathname.toLowerCase() === "/checkout";
 
   const [isDonationOpen, setIsDonationOpen] = useState(false);
   const [isPresaleOpen, setIsPresaleOpen] = useState(false);
@@ -107,7 +115,9 @@ function AppContent() {
         <Routes>
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/companion" element={<AffiliateExperience />} />
+          <Route path="/advocate/join" element={<AdvocateAccessPage mode="join" />} />
+          <Route path="/advocate/login" element={<AdvocateAccessPage mode="login" />} />
+          <Route path="/companion" element={<CompanionRoute />} />
           <Route path="/AffiliateExperience" element={<AffiliateExperience />} />
           {/* Home page */}
           <Route

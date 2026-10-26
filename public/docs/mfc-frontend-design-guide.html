@@ -71,6 +71,7 @@
 <ul>
 <li>Use one short MFC-branded checkout at <code>/checkout?product=book</code> or <code>/checkout?product=promoter</code>; each path has a clear title, exact total, short form, and separate purchase explanation.</li>
 <li>Book checkout collects name, email, phone, and delivery city. Advocate checkout collects name, email, phone, and an optional referral/sponsor code. Keep registration distinct from book purchase.</li>
+<li>Phone fields use a searchable or native country selector with flag, country name, and calling code; submit the normalized international number and selected country metadata.</li>
 <li>Send the customer to Paystack&#x27;s hosted authorization URL after the MFC server initializes the transaction. The browser must never contain the Paystack secret key or set a payment amount.</li>
 <li>On return, show a pending verification state. Only show success after the server verifies the transaction amount, currency, status, and product with Paystack and the MFC order/registration service confirms fulfillment.</li>
 <li>If payment infrastructure or fulfillment is not configured, explain the issue and do not charge. Show recoverable errors and preserve the entered form values.</li>
@@ -79,6 +80,7 @@
 <ul>
 <li>Explain the book&#x27;s audience and scope: 21 chapters across the family journey, from pre-conception through pregnancy, birth, infant care, postpartum recovery, and partner support.</li>
 <li>Show the standard digital edition price clearly: <strong>₦30,000</strong>. When a customer follows a promoter referral, show the <strong>₦25,000 promoter price</strong> and preserve that attribution through checkout.</li>
+<li>Referral links should land on the public <code>/landing</code> story and preserve the promoter code through payment return and fulfillment. Validate the code with the affiliate system before applying the discount.</li>
 <li>State what is included and how digital delivery works before checkout.</li>
 <li>Show whether the displayed amount is the standard price or promoter-link price; never hide a discount or change the price unexpectedly at checkout.</li>
 <li>Offer a secondary, separate path for visitors interested in becoming a Family Health Promoter.</li>
@@ -86,6 +88,8 @@
 </ul>
 <h3 id='promoter-registration'>Promoter registration</h3>
 <ul>
+<li>Start with the program explanation and ₦5,000 payment at <code>/checkout?product=promoter</code>. After verified payment, offer <code>/advocate/join</code> and <code>/advocate/login</code>; make clear that payment and MFC account access are sequential steps.</li>
+<li>Preserve the verified payment reference, payment email, and sponsor/referral context through account access. Provide error, retry, and activation-pending states; payment or account creation alone must not imply active advocate status.</li>
 <li>Show the one-time <strong>₦5,000</strong> fee as promoter-program registration. State clearly that it is for program access/status and does not purchase the book.</li>
 <li>Explain the promoter receives official status, a unique promoter ID, a personal referral link, promoter training, sales/commission dashboard, product FAQs, and approved marketing materials.</li>
 <li>Explain the commission model and attribution in a short, expandable breakdown before registration/payment.</li>

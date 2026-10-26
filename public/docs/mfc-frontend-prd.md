@@ -101,11 +101,14 @@ Needs to review promoter registration/attribution exceptions, reconcile eligible
 
 ### B. Join the promoter program
 
-1. Visitor opens the Health Promoter explainer and sees that ₦5,000 is for program access/status and does not include the book.
-2. Visitor reviews benefits, four commission levels, eligibility/terms, and payout cadence.
-3. Visitor follows a promoter invitation or enters a sponsor/referral code/link.
-4. Registration creates a promoter ID and locks sponsor attribution; if the sponsor cannot be resolved, the interface clearly explains the next step rather than guessing.
-5. After successful payment/activation, the member sees their promoter link, account setup, and starter resources.
+1. Visitor opens `/checkout?product=promoter`, reviews the Health Advocate role and sees that ₦5,000 is for program access/status and does not include the book.
+2. Visitor enters the email and contact details for the payment and completes the ₦5,000 Paystack transaction.
+3. The MFC server verifies the payment status, amount, currency, reference, and product. Only a verified transaction unlocks the next step; preserve the payment reference and sponsor/referral context.
+4. Visitor chooses Create account or Sign in. Account creation uses `POST /api/v1/auth/register` with name, email, international phone (`phone_no`), password, and `password_confirmation`. Sign-in uses `POST /api/v1/auth/login` with email and password. Require the account email to match the payment email so MFC can reconcile the payment.
+5. The MFC API returns an auth token and account profile. Keep the token in session-scoped browser storage, never log it, and do not send passwords to Paystack or analytics.
+6. Only after the advocate activation service confirms registration does the member see their promoter link and starter resources. If activation is unavailable, show payment received / activation pending and a support path; do not claim the member is active.
+
+The published MFC API collection documents account registration and login, but does not define advocate activation, sponsor assignment, or book-order creation. Those contracts must be confirmed with the API owner before claiming those outcomes.
 
 ### C. Share and track book sales
 
@@ -129,6 +132,12 @@ Needs to review promoter registration/attribution exceptions, reconcile eligible
 3. The MFC server initializes the Paystack transaction with a server-controlled amount and sends the browser to Paystack's authorization URL. The Paystack secret key is never exposed to the browser.
 4. Paystack returns the customer to a pending state. MFC verifies transaction status, amount, currency, reference, and product server-side before submitting the idempotent book order or activating advocate registration.
 5. If payment initialization or fulfillment is not configured, checkout fails closed with a clear support message. A payment return alone is never treated as a successful order.
+
+### F. Advocate account access
+
+- `/checkout?product=promoter` explains the program and collects the one-time fee first. After verified payment, continue to `/advocate/join` or `/advocate/login` with the payment reference and sponsor code preserved.
+- The auth forms use the documented MFC endpoints under `VITE_API_BASE_URL`; the account email must match the payment email. Store a verified payment reference before offering the auth step.
+- Sign-out/session expiry and account-recovery behavior require API support and must be confirmed before production release.
 
 ## 8. Functional requirements
 
@@ -208,7 +217,17 @@ The frontend displays authoritative commission records from the affiliate/commis
 
 Confirm exact service capabilities, webhooks, fee/payout mechanics, and source-of-truth boundaries before implementation. The storefront should not expose internal provider redirects as the primary brand experience where an API/embedded or well-branded handoff is available.
 
-For the new Paystack handoff, configure `PAYSTACK_SECRET_KEY`, `APP_BASE_URL`, `MFC_API_BASE_URL` for book order creation, `MFC_PROMOTER_REGISTRATION_URL` for advocate activation, and `MFC_FULFILLMENT_TOKEN` for server-to-server requests in the serverless host. Never use a `VITE_` prefix for a secret. Fulfillment endpoints must accept the Paystack reference as an idempotency key so a verification retry cannot create duplicate orders or advocate registrations. Confirm the advocate endpoint and activation contract before enabling the ₦5,000 payment path.
+For the Paystack handoff, configure server-side `PAYSTACK_SECRET_KEY` and `APP_BASE_URL`. Book fulfillment additionally needs `MFC_API_BASE_URL` and `MFC_FULFILLMENT_TOKEN`; advocate payment is verified before the account step, while advocate activation still needs a documented MFC endpoint that consumes the payment reference and authenticated account. Never use a `VITE_` prefix for a secret. Fulfillment endpoints must accept the Paystack reference as an idempotency key.
+
+The auth form uses `VITE_API_BASE_URL` as the MFC API v1 root, currently `https://apime.myfamilycompanion.org/api/v1`. It calls `/auth/register` and `/auth/login` and expects a JSON `token` plus `data` profile in the response.
+
+### Current checkout implementation
+
+- `/landing` is the buyer entry point. Direct book checkout is ₦30,000; `?ref=<promoter-code>` shows ₦25,000 and carries the code through `/checkout`, Paystack initialization metadata, the payment return URL, verification, and order fulfillment. `/companion?ref=...` forwards referred visitors to the landing page.
+- Checkout collects name, email, phone with country flag/calling-code selection, and city for a book order. The phone is submitted in international format together with the selected country and ISO code.
+- `/checkout?product=promoter` explains the ₦5,000 one-time registration, program benefits, and illustrative commission rates before the separate payment.
+- The frontend uses a server-side Paystack transaction initialization and transaction verification flow. The `.env` currently provides `VITE_PAYSTACK_PUBLIC_KEY`, which is a public key, not a hosted checkout URL. Live checkout still requires server-side `PAYSTACK_SECRET_KEY`, `APP_BASE_URL`, `MFC_FULFILLMENT_TOKEN`, plus working MFC book-order and advocate-registration endpoints. Configure these in the deployment environment; never expose the secret through a `VITE_` variable.
+- Referral code syntax is carried and checked by this frontend implementation; production must validate the promoter against the affiliate system before granting the ₦25,000 discount and crediting commission. The sample `OVO123` link in the prototype is illustrative and must be replaced with the signed-in promoter's real unique code.
 
 - Confirm how long promoter referral attribution is retained, what happens when a referral is invalid/expired, and which provider validates the referrer before applying the ₦25,000 price.
 - Define leaderboard qualification, period boundaries, ties, eligibility, privacy/display names, and treatment of refunds/cancelled sales before publishing rankings.

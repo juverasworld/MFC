@@ -1,5 +1,5 @@
 const PRODUCTS = {
-  book: { amount: 3000000 },
+  book: { directAmount: 3000000, referralAmount: 2500000 },
   promoter: { amount: 500000 },
 };
 
@@ -13,7 +13,7 @@ export default async function verifyPayment(req, res) {
   if (typeof reference !== "string" || !/^MFC-[a-zA-Z0-9-]{8,80}$/.test(reference)) {
     return send(res, 400, { error: "A valid payment reference is required." });
   }
-  if (!process.env.PAYSTACK_SECRET_KEY || !process.env.MFC_FULFILLMENT_TOKEN) return send(res, 503, { error: "Payment verification is temporarily unavailable." });
+  if (!process.env.PAYSTACK_SECRET_KEY) return send(res, 503, { error: "Payment verification is temporarily unavailable." });
 
   try {
     const verifyResponse = await fetch(`https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`, {
@@ -27,9 +27,14 @@ export default async function verifyPayment(req, res) {
     const metadata = transaction.metadata || {};
     const product = metadata.product;
     const offer = PRODUCTS[product];
-    if (!offer || transaction.reference !== reference || transaction.currency !== "NGN" || Number(transaction.amount) !== offer.amount) {
+    const referralCode = typeof metadata.referral_code === "string" ? metadata.referral_code : "";
+    const expectedAmount = product === "book" ? (referralCode ? offer?.referralAmount : offer?.directAmount) : offer?.amount;
+    if ((product === "book" && referralCode && !/^[A-Za-z0-9_-]{2,80}$/.test(referralCode)) || !offer || transaction.reference !== reference || transaction.currency !== "NGN" || Number(transaction.amount) !== expectedAmount) {
       return send(res, 400, { error: "The payment details do not match an MFC order. Please contact MFC support." });
     }
+
+    if (product === "promoter") return send(res, 200, { success: true, product, accountSetupRequired: true });
+    if (!process.env.MFC_FULFILLMENT_TOKEN) return send(res, 503, { error: "Payment was received, but MFC book fulfillment is not configured. Keep your reference and contact MFC support." });
 
     let fulfillmentUrl;
     let fulfillmentPayload;
@@ -40,8 +45,11 @@ export default async function verifyPayment(req, res) {
         firstname: metadata.customer_name,
         email: transaction.customer?.email,
         phone: metadata.phone,
+        country: metadata.country,
+        countryCode: metadata.country_code,
         city: metadata.city,
         no_of_copies: 1,
+        referralCode,
         reference,
       };
     } else {
@@ -51,6 +59,8 @@ export default async function verifyPayment(req, res) {
         name: metadata.customer_name,
         email: transaction.customer?.email,
         phone: metadata.phone,
+        country: metadata.country,
+        countryCode: metadata.country_code,
         referralCode: metadata.referral_code || "",
         reference,
         amount: offer.amount,

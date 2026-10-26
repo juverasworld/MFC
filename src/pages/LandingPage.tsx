@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { gsap } from "gsap";
 import authorPhoto from "../assets/author2.jpg";
 import bookPhoto from "../assets/WhatsApp Image 2025-07-09 at 08.47.50_9462555c.jpg";
@@ -89,6 +89,11 @@ function LandingTestimonials() {
 }
 
 export default function LandingPage() {
+  const [searchParams] = useSearchParams();
+  const referralId = searchParams.get("ref")?.trim() || "";
+  const bookPrice = referralId ? "₦25,000" : "₦30,000";
+  const bookCheckout = referralId ? `/checkout?product=book&ref=${encodeURIComponent(referralId)}` : "/checkout?product=book";
+
   return (
     <div className="mfc-landing">
       <header className="landing-header">
@@ -99,7 +104,7 @@ export default function LandingPage() {
         <nav className="landing-nav" aria-label="Main navigation">
           <a href="#story">Our story</a>
           <a href="#inside">Inside the book</a>
-          <Link className="landing-nav-cta" to="/checkout?product=book">Get the book <span aria-hidden="true">↗</span></Link>
+          <Link className="landing-nav-cta" to={bookCheckout}>Get the book <span aria-hidden="true">↗</span></Link>
         </nav>
       </header>
 
@@ -110,10 +115,10 @@ export default function LandingPage() {
             <h1>Good health guidance should reach families <em>before the hard moment.</em></h1>
             <p className="hero-lede">My Family Companion brings clear, compassionate health education to the conversations families have before pregnancy, through birth, and while raising a child.</p>
             <div className="hero-actions">
-              <Link className="button-primary" to="/checkout?product=book">Buy the book <span aria-hidden="true">→</span></Link>
+              <Link className="button-primary" to={bookCheckout}>Buy the book <span aria-hidden="true">→</span></Link>
               <Link className="button-text" to="/checkout?product=promoter">Become an MFC advocate <span aria-hidden="true">↗</span></Link>
             </div>
-            <p className="hero-note">Book ₦30,000 <i>·</i> Advocate registration ₦5,000 <i>·</i> Separate purchases</p>
+            <p className="hero-note">Book {bookPrice}{referralId ? " through this advocate link" : " direct from MFC"} <i>·</i> Advocate registration ₦5,000 <i>·</i> Separate purchases</p>
           </div>
           <div className="hero-visual" aria-label="Dr. OVO and the My Family Companion book">
             <div className="hero-image-wash" />
@@ -127,7 +132,7 @@ export default function LandingPage() {
           <div className="choice-intro"><span>START HERE</span><h2>What brings you to MFC?</h2></div>
           <article className="choice-card choice-book">
             <div><span className="choice-number">01 / FOR YOUR FAMILY</span><h3>Bring the guide home.</h3><p>One book for the questions that come before, during and after pregnancy—made to support better conversations with your care team.</p></div>
-            <div className="choice-bottom"><b>₦30,000 <small>one-time</small></b><Link to="/checkout?product=book">Buy the book <span aria-hidden="true">→</span></Link></div>
+            <div className="choice-bottom"><b>{bookPrice} <small>{referralId ? "advocate referral price" : "direct MFC price"}</small></b><Link to={bookCheckout}>Buy the book <span aria-hidden="true">→</span></Link></div>
           </article>
           <article className="choice-card choice-advocate">
             <div><span className="choice-number">02 / FOR YOUR COMMUNITY</span><h3>Help another family find it.</h3><p>Join the MFC Health Advocate community for program access, product training and approved resources to share the book.</p></div>
@@ -151,7 +156,7 @@ export default function LandingPage() {
 
         <section className="closing-cta">
           <div><span>MAKE THE NEXT STEP YOURS</span><h2>Start with the guide. Share it when you’re ready.</h2></div>
-          <div className="closing-actions"><Link className="button-light" to="/checkout?product=book">Buy the book · ₦30,000 <span aria-hidden="true">→</span></Link><Link className="closing-secondary" to="/checkout?product=promoter">Join as an advocate · ₦5,000</Link></div>
+          <div className="closing-actions"><Link className="button-light" to={bookCheckout}>Buy the book · {bookPrice} <span aria-hidden="true">→</span></Link><Link className="closing-secondary" to="/checkout?product=promoter">Join as an advocate · ₦5,000</Link></div>
         </section>
       </main>
       <footer className="landing-footer"><a className="landing-brand" href="#top"><span className="landing-mark">MFC</span><span><b>My Family Companion</b><small>FAMILY HEALTH, MADE HUMAN</small></span></a><span>Education for the family journey.</span><a href="#top">Back to top ↑</a></footer>
